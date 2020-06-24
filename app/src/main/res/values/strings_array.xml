@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="qualification_list">
+        <item>Matric</item>
+        <item>Diploma</item>
+        <item>Advanced Diploma</item>
+        <item>Masters Degree</item>
+        <item>Doctorate Degree</item>
+    </array>
+
+    <array name="education_list">
+        <item>Business</item>
+        <item>Education</item>
+        <item>Technology</item>
+        <item>Engineering</item>
+        <item>Arts and Culture</item>
+        <item>Health and Environmental</item>
+    </array>
+
+    <array name="appointment_list">
+        <item>Part time</item>
+        <item>Full time</item>
+        <item>Fixed contract</item>
+    </array>
+
+    <array name="job_position_list">
+        <item>Internship</item>
+        <item>Entry Level</item>
+        <item>Junior Post</item>
+        <item>Senior Post</item>
+        <item>Manager Post</item>
+    </array>
+
+    <array name="job_location_list">
+        <item>Welkom</item>
+        <item>Durban</item>
+        <item>Sandton</item>
+        <item>Cape Town</item>
+        <item>Centurion</item>
+        <item>Polokwane</item>
+        <item>Potchefstroom</item>
+        <item>Bloemfontein</item>
+    </array>
+</resources>
