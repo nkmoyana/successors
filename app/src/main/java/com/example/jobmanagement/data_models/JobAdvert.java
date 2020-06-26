@@ -9,7 +9,7 @@ public class JobAdvert
 {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo
-    private String id;
+    private long id;
 
     @ColumnInfo
     private String jobTitle;
@@ -38,11 +38,11 @@ public class JobAdvert
     @ColumnInfo
     private String jobQualification;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
