@@ -9,18 +9,17 @@ import androidx.room.Delete;
 import androidx.room.Query;
 
 @Dao
-public interface JobProfileDao extends GenericDao<JobProfile>
-{
-    @Delete
+public interface JobProfileDao extends GenericDao<JobProfile> {
+    @Query("DELETE FROM jobprofiletable WHERE id = :id")
     abstract void delete(long id);
 
-    @Query("SELECT * FROM JobProfile")
-    abstract List<JobProfile> getAllJobProfiles();
+    @Query("SELECT * FROM JobProfileTable")
+    List<JobProfile> getAllJobProfiles();
 
-    @Query("SELECT * FROM JobProfile WHERE id LIKE :id")
-    abstract JobProfile getJobProfileById(long id);
+    @Query("SELECT * FROM JobProfileTable WHERE id LIKE :id")
+    JobProfile getJobProfileById(long id);
 
-    @Query("SELECT * FROM JobProfile WHERE email LIKE :email")
-    abstract JobProfile getJobProfileByEmail(String email);
+    @Query("SELECT * FROM JobProfileTable WHERE email LIKE :email")
+    JobProfile getJobProfileByEmail(String email);
 
 }

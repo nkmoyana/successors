@@ -5,16 +5,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "JobApplicationTable", primaryKeys = {"jobId","profileId"})
 public class JobApplication
 {
-    @PrimaryKey
-    @ColumnInfo
-    @ForeignKey(entity = JobAdvert.class, parentColumns = "id", childColumns = "jobId")
+    @ForeignKey(entity = JobAdvert.class, parentColumns = "id", childColumns = "jobId") //onDelete and onUpdate
     private long jobId;
-
-    @ColumnInfo
-    @ForeignKey(entity = JobProfile.class, parentColumns = "id", childColumns = "profileId")
+    @ForeignKey(entity = JobProfile.class, parentColumns = "id", childColumns = "profileId") //onDelete and onUpdate
     private long profileId;
 
     public long getJobId() {

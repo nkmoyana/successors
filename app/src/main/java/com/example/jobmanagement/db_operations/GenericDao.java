@@ -9,11 +9,11 @@ import androidx.room.Update;
 public interface GenericDao<T>
 {
     @Insert
-    public abstract void insert(T user);
+    void insert(T user);
 
     @Delete
-    public abstract void delete(T user);
+    void delete(T user);
 
     @Update
-    public abstract void update(T user);
+    void update(T user);
 }

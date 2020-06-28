@@ -4,38 +4,19 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "JobAdvertTable")
 public class JobAdvert
 {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo
     private long id;
-
-    @ColumnInfo
     private String jobTitle;
-
-    @ColumnInfo
     private String jobSalary;
-
-    @ColumnInfo
     private String jobLocation;
-
-    @ColumnInfo
     private String appointmentType;
-
-    @ColumnInfo
     private String jobPosition;
-
-    @ColumnInfo
     private String jobCompany;
-
-    @ColumnInfo
     private String jobDescription;
-
-    @ColumnInfo
     private boolean isLicence;
-
-    @ColumnInfo
     private String jobQualification;
 
     public long getId() {

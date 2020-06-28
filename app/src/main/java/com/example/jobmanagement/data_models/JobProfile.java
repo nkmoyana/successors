@@ -7,38 +7,19 @@ import androidx.room.Index;
 import androidx.room.PrimaryKey;
 import io.reactivex.annotations.NonNull;
 
-@Entity(indices = {@Index(value = {"email", "identityNumber"},
-        unique = true)})
+@Entity(tableName = "JobProfileTable", indices = {@Index(value = {"email", "identityNumber"}, unique = true)})
 public class JobProfile
 {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo
     @NonNull
     private long id;
-
-
-    @ColumnInfo
     private String email;
-
-    @ColumnInfo
     private String password;
-
-    @ColumnInfo
     private String name;
-
-    @ColumnInfo
     private String surname;
-
-    @ColumnInfo
     private String cellphone;
-
-    @ColumnInfo
     private String identityNumber;
-
-    @ColumnInfo
     private String qualification;
-
-    @ColumnInfo
     private String education;
 
     public long getId() {

@@ -11,6 +11,10 @@ import android.widget.AutoCompleteTextView;
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.data_models.JobProfile;
+import com.example.jobmanagement.db_operations.AppDatabase;
+import com.example.jobmanagement.db_operations.Connections;
+import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.example.jobmanagement.db_operations.JobProfileDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_profile.InsertJobProfileAsync;
 import com.google.android.material.textfield.TextInputEditText;
@@ -24,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
     TextInputLayout lytQualificationDropdown, lytFieldDropdown;
     AutoCompleteTextView dropdownText, dropdownTextField;
 
+    JobProfileDao jobProfileDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Register Profile");
+
+        jobProfileDao = Connections.getInstance(ProfileActivity.this).getDatabase().getJobProfileDao();
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -51,6 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         lytQualificationDropdown = findViewById(R.id.lytQualification_dropdown);
         dropdownText = findViewById(R.id.dropdown_text);
+        dropdownTextField = findViewById(R.id.dropdown_text_field);
 
         ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(ProfileActivity.this, R.array.qualification_list, R.layout.menu_dropdown);
         adapter1.setDropDownViewResource(R.layout.menu_dropdown);
@@ -65,33 +73,38 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public void OnClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.btnRegister:
-                JobProfile jobProfile = new JobProfile();
-                jobProfile.setId(123456789101112L);
-                jobProfile.setEmail("moses.outlook@outlook.com");
-                jobProfile.setName("Moses");
-                jobProfile.setSurname("Tsotetsi");
-                jobProfile.setCellphone("076 543 2105");
-                jobProfile.setIdentityNumber("9005115698080");
-                jobProfile.setQualification("Masters");
-                jobProfile.setEducation("Information Technology");
-//
-                new InsertJobProfileAsync(jobProfile, new AsyncTaskCallback<JobProfile>() {
-                    @Override
-                    public void onSuccess(JobProfile success) {
-                        AppUtility.ShowToast(ProfileActivity.this,success.getName() + "\n" + success.getSurname()
-                                + " Added!");
-                    }
+    public void Register(View view){
 
-                    @Override
-                    public void onException(Exception e) {
-                        AppUtility.ShowToast(ProfileActivity.this, e.getMessage());
-                    }
-                }).execute();
-                break;
+        JobProfile jobProfile = new JobProfile();
+
+        boolean TextInputEditTextHasText = AppUtility.TextInputEditTextHasText(edtEmail, edtPassword, edtConfirm, edtName, edtLastName, edtPhone, edtID);
+        boolean AutoCompleteTextViewHasText = AppUtility.AutoCompleteTextViewHasText(dropdownText, dropdownTextField);
+        if(TextInputEditTextHasText && AutoCompleteTextViewHasText){
+            jobProfile.setEmail(edtEmail.getText().toString().trim());
+            jobProfile.setPassword(edtPassword.getText().toString().trim());
+            jobProfile.setName(edtName.getText().toString().trim());
+            jobProfile.setSurname(edtLastName.getText().toString().trim());
+            jobProfile.setCellphone(edtPhone.getText().toString().trim());
+            jobProfile.setIdentityNumber(edtID.getText().toString().trim());
+            jobProfile.setEducation(dropdownText.getText().toString());
+            jobProfile.setQualification(dropdownTextField.getText().toString());
+
+            new InsertJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
+                @Override
+                public void onSuccess(JobProfile success) {
+                    AppUtility.ShowToast(ProfileActivity.this, "Hi "+ success.getName() + " " + success.getSurname() + ", Your profile has been created");
+                    ProfileActivity.this.finish();
+                }
+
+                @Override
+                public void onException(Exception e) {
+                    AppUtility.ShowToast(ProfileActivity.this, e.getMessage());
+                }
+            }).execute(jobProfile);
         }
+        else {
+            AppUtility.ShowToast(ProfileActivity.this, "Please enter all fields");
+        }
+
     }
 }

@@ -8,45 +8,41 @@ import com.example.jobmanagement.db_operations.JobProfileDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 
 
-public class InsertJobProfileAsync extends AsyncTask<Integer, Void, JobProfile>
+public class InsertJobProfileAsync extends AsyncTask<JobProfile, Void, JobProfile>
 {
-    private Context context;
     private AsyncTaskCallback<JobProfile> callback;
     private Exception exception;
     private JobProfile jobProfile;
     private JobProfileDao jobProfileDao;
 
-    public InsertJobProfileAsync (JobProfile jobProfile, AsyncTaskCallback<JobProfile> callback)
+    public InsertJobProfileAsync (JobProfileDao jobProfileDao , AsyncTaskCallback<JobProfile> callback)
     {
         this.callback = callback;
-        this.jobProfile = jobProfile;
+        this.jobProfileDao = jobProfileDao;
     }
 
     @Override
-    protected JobProfile doInBackground(Integer... integers) {
+    protected JobProfile doInBackground(JobProfile... jobProfiles) {
 
         exception = null;
-
-
-       // JobProfile jobProfile = jobProfileDao.getJobProfileById(this.jobProfile.getId());
-
         try
         {
-//            if(jobProfile == null)
-//            {
-//               jobProfileDao.insert(this.jobProfile);
-//            }
-//            else
-//            {
-//                throw new Exception("Job Profile already exists!");
-//            }
+            jobProfile = jobProfileDao.getJobProfileByEmail(jobProfiles[0].getEmail()); //Check to see if the object already exist
+            if(jobProfile == null)
+            {
+                jobProfileDao.insert(jobProfiles[0]);
+            }
+            else
+            {
+                throw new Exception("Job Profile already exists!");
+            }
         }
         catch (Exception e)
         {
             exception = e;
         }
 
-        return this.jobProfile;
+        return jobProfiles[0];
     }
 
     @Override

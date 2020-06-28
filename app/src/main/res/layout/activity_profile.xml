@@ -219,8 +219,8 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/buttons"
             android:drawableLeft="@drawable/save"
+            android:onClick="Register"
             android:text="Register"
-            android:onClick="OnClick"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>

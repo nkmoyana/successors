@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.JobAdvertActivity"></activity>
         <activity android:name=".activities.EditProfileActivity" />
-        <activity android:name=".activities.JobProfileActivity" />
+        <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.ListAdvertActivity" />
         <activity android:name=".activities.JobDetailActivity" />
         <activity android:name=".activities.LoginActivity">

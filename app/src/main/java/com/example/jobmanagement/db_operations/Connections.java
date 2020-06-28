@@ -10,7 +10,7 @@ public class Connections {
 
     public Connections(Context context)
     {
-        database = Room.databaseBuilder(context, AppDatabase.class, "Job_Table").build();
+        database = Room.databaseBuilder(context, AppDatabase.class, "db_job_management").build();
     }
 
     public static Connections getInstance(Context context)
