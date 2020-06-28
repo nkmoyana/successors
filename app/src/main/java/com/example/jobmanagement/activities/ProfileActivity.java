@@ -4,14 +4,19 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.example.jobmanagement.R;
+import com.example.jobmanagement.app_utilities.AppUtility;
+import com.example.jobmanagement.data_models.JobProfile;
+import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.db_repositories.job_profile.InsertJobProfileAsync;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-public class JobProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     TextInputLayout lytEmail, lytPassword, lytConfirm, lytName, lytLastName, lytPhone, lytID;
     TextInputEditText edtEmail, edtPassword, edtConfirm, edtName, edtLastName, edtPhone, edtID;
@@ -23,7 +28,7 @@ public class JobProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_profile);
+        setContentView(R.layout.activity_profile);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Register Profile");
@@ -47,16 +52,46 @@ public class JobProfileActivity extends AppCompatActivity {
         lytQualificationDropdown = findViewById(R.id.lytQualification_dropdown);
         dropdownText = findViewById(R.id.dropdown_text);
 
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(JobProfileActivity.this, R.array.qualification_list, R.layout.menu_dropdown);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(ProfileActivity.this, R.array.qualification_list, R.layout.menu_dropdown);
         adapter1.setDropDownViewResource(R.layout.menu_dropdown);
         dropdownText.setAdapter(adapter1);
 
         lytFieldDropdown = findViewById(R.id.lytField_dropdown);
         dropdownText = findViewById(R.id.dropdown_text_field);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(JobProfileActivity.this, R.array.education_list, R.layout.menu_dropdown);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ProfileActivity.this, R.array.education_list, R.layout.menu_dropdown);
         adapter.setDropDownViewResource(R.layout.menu_dropdown);
         dropdownText.setAdapter(adapter);
 
+    }
+
+    public void OnClick(View view) {
+        switch(view.getId())
+        {
+            case R.id.btnRegister:
+                JobProfile jobProfile = new JobProfile();
+                jobProfile.setId(9911085496080L);
+                jobProfile.setEmail("moses.outlook@outlook.com");
+                jobProfile.setName("Moses");
+                jobProfile.setSurname("Tsotetsi");
+                jobProfile.setCellphone("064 519 6761");
+                jobProfile.setIdentityNumber("9911085496080");
+                jobProfile.setQualification("Masters");
+                jobProfile.setEducation("Information Technology");
+//
+                new InsertJobProfileAsync(jobProfile, new AsyncTaskCallback<JobProfile>() {
+                    @Override
+                    public void onSuccess(JobProfile success) {
+                        AppUtility.ShowToast(ProfileActivity.this,success.getName() + "\n" + success.getSurname()
+                                + " Added!");
+                    }
+
+                    @Override
+                    public void onException(Exception e) {
+                        AppUtility.ShowToast(ProfileActivity.this, e.getMessage());
+                    }
+                }).execute();
+                break;
+        }
     }
 }

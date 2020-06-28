@@ -5,8 +5,15 @@ import com.example.jobmanagement.data_models.JobApplication;
 import com.example.jobmanagement.data_models.JobProfile;
 
 import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
-/*@Database(entities = {JobAdvert.class, JobApplication.class, JobProfile.class},
+@Database(entities = {JobAdvert.class, JobApplication.class, JobProfile.class},
         version = 1)
-public class AppDatabase {
-}*/
+public abstract class AppDatabase extends RoomDatabase {
+
+    //  public abstract JobAdvertDao getJobAdvertDao();
+
+    //  public abstract JobApplicationDao getJobApplicationDao();
+
+    public  abstract JobProfileDao getJobProfileDao();
+}

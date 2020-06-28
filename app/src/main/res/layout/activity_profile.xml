@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.JobProfileActivity">
+    tools:context=".activities.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -220,6 +220,7 @@
             android:background="@drawable/buttons"
             android:drawableLeft="@drawable/save"
             android:text="Register"
+            android:onClick="OnClick"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>

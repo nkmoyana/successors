@@ -21,3 +21,4 @@ public interface JobAdvertDao extends GenericDao<JobAdvert>
     abstract JobAdvert getJobAdvertById(long id);
 
 }
+
