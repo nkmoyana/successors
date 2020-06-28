@@ -4,16 +4,16 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:restoreAnyVersion="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="true"
-        android:restoreAnyVersion="true">
-        <activity android:name=".activities.RegisterProfile"></activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.JobAdvertActivity"></activity>
+        <activity android:name=".activities.EditProfileActivity" />
         <activity android:name=".activities.JobProfileActivity" />
-        <activity android:name=".activities.JobAdvertActivity" />
         <activity android:name=".activities.ListAdvertActivity" />
         <activity android:name=".activities.JobDetailActivity" />
         <activity android:name=".activities.LoginActivity">

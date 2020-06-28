@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.RegisterProfile">
+    tools:context=".activities.EditProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,6 +39,9 @@
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
                 android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -114,8 +116,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
-            android:hint="First Name"
-            app:startIconContentDescription="first name"
+            android:hint="Last Name"
+            app:startIconContentDescription="last name"
             app:startIconDrawable="@drawable/person">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -173,6 +175,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/qualification"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             app:endIconMode="dropdown_menu"
             android:hint="Select education level"
             app:boxBackgroundMode="outline">
@@ -180,7 +185,9 @@
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:text="Education Level"
+                android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,19 +197,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/qualification"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
             app:endIconMode="dropdown_menu"
-            android:hint="Select education level"
+            android:hint="Select field of study"
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text_field"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:text="Field Of Study"
+                android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/btnRegister"
+                android:id="@+id/btnRUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -210,10 +222,8 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/buttons"
             android:drawableLeft="@drawable/save"
-            android:text="Register"
+            android:text="Update"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-
     </LinearLayout>
 </ScrollView>
