@@ -70,12 +70,12 @@ public class ProfileActivity extends AppCompatActivity {
         {
             case R.id.btnRegister:
                 JobProfile jobProfile = new JobProfile();
-                jobProfile.setId(9911085496080L);
+                jobProfile.setId(12345678910111213L);
                 jobProfile.setEmail("moses.outlook@outlook.com");
                 jobProfile.setName("Moses");
                 jobProfile.setSurname("Tsotetsi");
-                jobProfile.setCellphone("064 519 6761");
-                jobProfile.setIdentityNumber("9911085496080");
+                jobProfile.setCellphone("076 543 2105");
+                jobProfile.setIdentityNumber("9005115698081");
                 jobProfile.setQualification("Masters");
                 jobProfile.setEducation("Information Technology");
 //
