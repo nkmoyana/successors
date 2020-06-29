@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnRegister, btnLogin;
     JobProfileDao jobProfileDao;
     String userEmail, userPassword;
-    SharedPreferences sharedpreferences;
+    //SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Job Adverts");
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
-        sharedpreferences= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        AppUtility.sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -57,23 +57,18 @@ public class LoginActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                 {
-                    sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
-                    sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
-
+                    AppUtility.sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
+                    AppUtility.sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
                 }
             }
         });
 
-        userEmail = sharedpreferences.getString("email", "");
-        userPassword = sharedpreferences.getString("password", "");
+        userEmail = AppUtility.sharedpreferences.getString("email", "");
+        userPassword = AppUtility.sharedpreferences.getString("password", "");
 
-         if(userEmail.isEmpty() && userPassword.isEmpty()){
-
-         }
-         else {
+         if(!(userEmail.isEmpty() && userPassword.isEmpty())){
              startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
          }
-
     }
 
     public  void RegisterProfile(View view){

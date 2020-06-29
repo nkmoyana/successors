@@ -2,6 +2,7 @@ package com.example.jobmanagement.app_utilities;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -13,6 +14,14 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AppUtility extends Application
 {
+    public  static  SharedPreferences sharedpreferences;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+    }
+
     public static void ShowToast(Context context, String message)
     {
         Toast.makeText(context,message, Toast.LENGTH_LONG).show();
