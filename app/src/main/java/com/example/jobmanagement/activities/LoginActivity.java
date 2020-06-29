@@ -4,9 +4,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     Switch keepLogged;
     Button btnRegister, btnLogin;
     JobProfileDao jobProfileDao;
+    String userEmail, userPassword;
+    SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Job Adverts");
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
+        sharedpreferences= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -45,6 +51,28 @@ public class LoginActivity extends AppCompatActivity {
         keepLogged = findViewById(R.id.swKeepLogged);
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin =findViewById(R.id.btnLogin);
+
+        keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
+                    sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
+
+                }
+            }
+        });
+
+        userEmail = sharedpreferences.getString("email", "");
+        userPassword = sharedpreferences.getString("password", "");
+
+         if(userEmail.isEmpty() && userPassword.isEmpty()){
+
+         }
+         else {
+             startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
+         }
 
     }
 
@@ -66,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
                 @Override
                 public void onSuccess(JobProfile success) {
+
                     startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
                 }
 
@@ -77,4 +106,6 @@ public class LoginActivity extends AppCompatActivity {
             }).execute(userEmail, password); //two strings
         }
     }
+
+
 }
