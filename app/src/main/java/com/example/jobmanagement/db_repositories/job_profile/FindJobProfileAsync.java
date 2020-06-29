@@ -8,36 +8,36 @@ import com.example.jobmanagement.db_operations.JobProfileDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 
 
-public class FindJobProfileAsync extends AsyncTask<Integer, Void, JobProfile>
+public class FindJobProfileAsync extends AsyncTask<String, Void, JobProfile>
 {
-    private Context context;
     private AsyncTaskCallback<JobProfile> callback;
     private Exception exception;
     private JobProfile jobProfile;
     private JobProfileDao jobProfileDao;
 
-    public FindJobProfileAsync (JobProfile jobProfile, AsyncTaskCallback<JobProfile> callback)
+    public FindJobProfileAsync (JobProfileDao jobProfileDao, AsyncTaskCallback<JobProfile> callback)
     {
         this.callback = callback;
-        this.jobProfile = jobProfile;
+        this.jobProfileDao = jobProfileDao;
     }
 
     @Override
-    protected JobProfile doInBackground(Integer... integers) {
-
+    protected JobProfile doInBackground(String... strings) {
         exception = null;
-
 
         try
         {
-            if (jobProfileDao.getAllJobProfiles().size() != 0)
+            jobProfile = jobProfileDao.getJobProfileByEmail(strings[0]);
+
+            if (jobProfile == null)
             {
-                jobProfileDao.getJobProfileByEmail(this.jobProfile.getEmail());
-                jobProfileDao.getJobProfileById(this.jobProfile.getId());
+                throw new Exception("Invalid login credentials");
             }
            else
             {
-                throw new Exception("There is no data in the database");
+                if(!(jobProfile.getPassword().equals(strings[1]))){
+                    throw new Exception("Invalid login credentials");
+                }
             }
         }
         catch (Exception e)
@@ -45,7 +45,7 @@ public class FindJobProfileAsync extends AsyncTask<Integer, Void, JobProfile>
             exception = e;
         }
 
-        return this.jobProfile;
+        return jobProfile;
     }
 
     @Override

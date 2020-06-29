@@ -11,6 +11,12 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.jobmanagement.R;
+import com.example.jobmanagement.app_utilities.AppUtility;
+import com.example.jobmanagement.data_models.JobProfile;
+import com.example.jobmanagement.db_operations.Connections;
+import com.example.jobmanagement.db_operations.JobProfileDao;
+import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.db_repositories.job_profile.FindJobProfileAsync;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -20,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText etEmail, etPassword;
     Switch keepLogged;
     Button btnRegister, btnLogin;
+    JobProfileDao jobProfileDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Job Adverts");
 
+        jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
+
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
         etEmail = findViewById(R.id.edtEmail);
@@ -37,26 +46,35 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin =findViewById(R.id.btnLogin);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
-            }
-        });
+    }
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty())
-                {
-                    Toast.makeText(LoginActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show(); //Do CustomToast Later
+    public  void RegisterProfile(View view){
+        startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
+    }
+
+    public  void Login(View view){
+        if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty()) // AppUtility
+        {
+            Toast.makeText(LoginActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show(); //Do CustomToast Later
+        }
+        else
+        {
+            String userEmail, password;
+            userEmail = etEmail.getText().toString().trim();
+            password = etPassword.getText().toString().trim();
+
+            new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
+                @Override
+                public void onSuccess(JobProfile success) {
+                    startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
                 }
-                else
-                {
 
+                @Override
+                public void onException(Exception e) {
+                    //errors on the TextFields here
+                    AppUtility.ShowToast(LoginActivity.this, e.getMessage());
                 }
-            }
-        });
-
+            }).execute(userEmail, password); //two strings
+        }
     }
 }

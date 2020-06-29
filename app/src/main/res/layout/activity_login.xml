@@ -90,6 +90,7 @@
             android:layout_weight="1"
             android:background="@drawable/buttons"
             android:drawableStart="@drawable/person_add"
+            android:onClick="RegisterProfile"
             android:text="Register"
             android:textColor="#FFFFFF" />
 
@@ -102,6 +103,7 @@
             android:layout_weight="1"
             android:background="@drawable/buttons"
             android:drawableStart="@drawable/exit_to_app"
+            android:onClick="Login"
             android:text="Login"
             android:textColor="#FFFFFF" />
     </LinearLayout>
