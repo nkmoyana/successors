@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -78,8 +79,9 @@ public class LoginActivity extends AppCompatActivity {
     public  void Login(View view){
         if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty()) // AppUtility
         {
-            Toast.makeText(LoginActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show(); //Do CustomToast Later
-        }
+            View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+            AppUtility.ShowToast(LoginActivity.this, "Please enter all fields", toastView,2);        }
         else
         {
             String userEmail, password;
@@ -96,7 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onException(Exception e) {
                     //errors on the TextFields here
-                    AppUtility.ShowToast(LoginActivity.this, e.getMessage());
+                    //AppUtility.ShowToast(LoginActivity.this, e.getMessage());
+
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(LoginActivity.this, e.getMessage(), toastView,2);
+
                 }
             }).execute(userEmail, password); //two strings
         }

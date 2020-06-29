@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
@@ -92,18 +93,33 @@ public class ProfileActivity extends AppCompatActivity {
             new InsertJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
                 @Override
                 public void onSuccess(JobProfile success) {
-                    AppUtility.ShowToast(ProfileActivity.this, "Hi "+ success.getName() + " " + success.getSurname() + ", Your profile has been created");
+                    //AppUtility.ShowToast(ProfileActivity.this, "Hi "+ success.getName() + " " + success.getSurname() + ", Your profile has been created");
+
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(ProfileActivity.this, "Hi " + success.getName() + " " + success.getSurname() + ", Your profile has been created", toastView, 1);
+
                     ProfileActivity.this.finish();
                 }
 
                 @Override
                 public void onException(Exception e) {
-                    AppUtility.ShowToast(ProfileActivity.this, e.getMessage());
+                    //AppUtility.ShowToast(ProfileActivity.this, e.getMessage());
+
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(ProfileActivity.this, e.getMessage(), toastView,2);
+
                 }
             }).execute(jobProfile);
         }
         else {
-            AppUtility.ShowToast(ProfileActivity.this, "Please enter all fields");
+            //AppUtility.ShowToast(ProfileActivity.this, "Please enter all fields");
+
+            View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+            AppUtility.ShowToast(ProfileActivity.this, "Please enter all fields", toastView,2);
+
         }
 
     }
