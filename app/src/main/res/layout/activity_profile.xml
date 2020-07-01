@@ -16,8 +16,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:ems="10"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="Register Profile"
             android:textSize="36sp"
@@ -31,6 +30,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
             android:hint="Enter email address"
             app:startIconContentDescription="email"
             app:startIconDrawable="@drawable/email">
@@ -52,6 +53,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="Password"
+            app:boxBackgroundMode="outline"
             app:endIconMode="password_toggle"
             app:startIconContentDescription="email"
             app:startIconDrawable="@drawable/password">
@@ -73,6 +75,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="Password"
+            app:boxBackgroundMode="outline"
             app:endIconMode="password_toggle"
             app:startIconContentDescription="confirm email"
             app:startIconDrawable="@drawable/password">
@@ -94,6 +97,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="First Name"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
             app:startIconContentDescription="first name"
             app:startIconDrawable="@drawable/person">
 
@@ -114,6 +119,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="Last Name"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
             app:startIconContentDescription="last name"
             app:startIconDrawable="@drawable/person">
 
@@ -134,6 +141,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="Cellphone Number"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
             app:startIconContentDescription="cellphone number"
             app:startIconDrawable="@drawable/phone">
 
@@ -154,6 +163,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             android:hint="Identity Number"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text"
+            app:counterEnabled="true"
+            app:counterMaxLength="13"
             app:startIconContentDescription="identity number"
             app:startIconDrawable="@drawable/person">
 
@@ -171,19 +184,19 @@
             android:id="@+id/lytQualification_dropdown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/qualification"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
+            android:hint="Highest Qualification"
+            android:textSize="8sp"
+            app:startIconDrawable="@drawable/qualification"
             app:endIconMode="dropdown_menu"
-            android:hint="Select education level"
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Education Level"
                 android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -198,14 +211,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
             app:endIconMode="dropdown_menu"
-            android:hint="Select field of study"
+            android:hint="Field of Study"
+            android:textSize="8sp"
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text_field"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Field Of Study"
                 android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>

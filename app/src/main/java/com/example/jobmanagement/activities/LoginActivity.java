@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.data_models.JobProfile;
-import com.example.jobmanagement.db_operations.AppDatabase;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobProfileDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
@@ -43,8 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Job Adverts");
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
-        AppUtility.sharedpreferences = getSharedPreferences("sharedpreferences" ,MODE_PRIVATE);
-                //PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        AppUtility.sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.edtPassword);
         keepLogged = findViewById(R.id.swKeepLogged);
         btnRegister = findViewById(R.id.btnRegister);
-        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin =findViewById(R.id.btnLogin);
 
         keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -80,8 +79,9 @@ public class LoginActivity extends AppCompatActivity {
     public  void Login(View view){
         if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty()) // AppUtility
         {
-            AppUtility.ShowToast(LoginActivity.this, "Enter all fields"); //Do CustomToast Later
-        }
+            View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+            AppUtility.ShowToast(LoginActivity.this, "Please enter all fields", toastView,2);        }
         else
         {
             String userEmail, password;
@@ -98,7 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onException(Exception e) {
                     //errors on the TextFields here
-                    AppUtility.ShowToast(LoginActivity.this, e.getMessage());
+                    //AppUtility.ShowToast(LoginActivity.this, e.getMessage());
+
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(LoginActivity.this, e.getMessage(), toastView,2);
+
                 }
             }).execute(userEmail, password); //two strings
         }
