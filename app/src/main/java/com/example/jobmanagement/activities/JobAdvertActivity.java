@@ -2,13 +2,20 @@ package com.example.jobmanagement.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Switch;
 
 import com.example.jobmanagement.R;
+import com.example.jobmanagement.app_utilities.AppUtility;
+import com.example.jobmanagement.app_utilities.ApplicationClass;
+import com.example.jobmanagement.data_models.JobAdvert;
+import com.example.jobmanagement.db_operations.Connections;
+import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -24,10 +31,17 @@ public class JobAdvertActivity extends AppCompatActivity {
     Switch swLicense;
     Button btnSave;
 
+    JobAdvert jobAdvert;
+
+    JobAdvertDao jobAdvertDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_advert);
+
+        jobAdvert = new JobAdvert();
+        jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
 
         lytJobTitle = findViewById(R.id.lytJobTitle);
         lytAppointType = findViewById(R.id.lytAppointmentType);
@@ -64,6 +78,38 @@ public class JobAdvertActivity extends AppCompatActivity {
         dropdownQualification.setAdapter(adapter);
 
 
+
+
+    }
+
+    public void Save(View view) {
+        jobAdvert.setJobTitle(edtJobTitle.getText().toString());
+        jobAdvert.setAppointmentType(dropdownAppointType.getText().toString());
+        jobAdvert.setJobPosition(dropdownPosition.getText().toString());
+        jobAdvert.setJobLocation(dropdownLocation.getText().toString());
+        jobAdvert.setJobCompany(edtAdCompany.getText().toString());
+        jobAdvert.setJobDescription(edtJobDescription.getText().toString());
+        jobAdvert.setJobQualification(dropdownQualification.getText().toString());
+        jobAdvert.setJobSalary(edtSalary.getText().toString());
+
+        if (swLicense.isChecked())
+        {
+            jobAdvert.setLicence(true);
+        }
+        else
+        {
+            jobAdvert.setLicence(false);
+        }
+
+
+
+        Intent intent = new Intent();
+
+        jobAdvertDao.insert(jobAdvert);
+        ApplicationClass.jobAdverts.add(jobAdvert);
+        setResult(RESULT_OK);
+        AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
+        JobAdvertActivity.this.finish();
 
     }
 }

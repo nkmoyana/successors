@@ -16,6 +16,7 @@ public class AppUtility extends Application
 {
     public  static  SharedPreferences sharedpreferences;
 
+
     @Override
     public void onCreate() {
         super.onCreate();

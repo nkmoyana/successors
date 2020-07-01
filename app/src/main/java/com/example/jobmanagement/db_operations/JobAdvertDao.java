@@ -5,7 +5,6 @@ import com.example.jobmanagement.data_models.JobAdvert;
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Query;
 
 @Dao

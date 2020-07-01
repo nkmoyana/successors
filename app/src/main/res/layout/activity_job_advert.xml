@@ -209,6 +209,7 @@
             android:background="@drawable/buttons"
             android:drawableLeft="@drawable/save"
             android:text="Save"
+            android:onClick="Save"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>

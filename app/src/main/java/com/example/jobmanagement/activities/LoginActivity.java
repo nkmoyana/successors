@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.data_models.JobProfile;
+import com.example.jobmanagement.db_operations.AppDatabase;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobProfileDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
@@ -42,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Job Adverts");
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
-        AppUtility.sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        AppUtility.sharedpreferences = getSharedPreferences("sharedpreferences" ,MODE_PRIVATE);
+                //PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.edtPassword);
         keepLogged = findViewById(R.id.swKeepLogged);
         btnRegister = findViewById(R.id.btnRegister);
-        btnLogin =findViewById(R.id.btnLogin);
+        btnLogin = findViewById(R.id.btnLogin);
 
         keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     public  void Login(View view){
         if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty()) // AppUtility
         {
-            Toast.makeText(LoginActivity.this, "Enter all fields", Toast.LENGTH_SHORT).show(); //Do CustomToast Later
+            AppUtility.ShowToast(LoginActivity.this, "Enter all fields"); //Do CustomToast Later
         }
         else
         {
