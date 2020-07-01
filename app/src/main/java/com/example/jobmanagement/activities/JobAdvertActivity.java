@@ -108,7 +108,7 @@ public class JobAdvertActivity extends AppCompatActivity {
         jobAdvertDao.insert(jobAdvert);
         ApplicationClass.jobAdverts.add(jobAdvert);
         setResult(RESULT_OK);
-        AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
+        //AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
         JobAdvertActivity.this.finish();
 
     }
