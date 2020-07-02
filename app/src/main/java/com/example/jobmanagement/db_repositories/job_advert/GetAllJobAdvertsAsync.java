@@ -16,17 +16,19 @@ public class GetAllJobAdvertsAsync extends AsyncTask<Integer, Void, List<JobAdve
     private AsyncTaskCallback<List<JobAdvert>> callback;
     private Exception exception;
     private JobAdvertDao jobAdvertDao;
+    private List<JobAdvert> results;
 
-    public GetAllJobAdvertsAsync (AsyncTaskCallback<List<JobAdvert>> callback)
+    public GetAllJobAdvertsAsync (JobAdvertDao jobAdvertDao, AsyncTaskCallback<List<JobAdvert>> callback)
     {
         this.callback = callback;
+        this.jobAdvertDao = jobAdvertDao;
     }
 
     @Override
     protected List<JobAdvert> doInBackground(Integer... integers) {
 
         exception = null;
-        List<JobAdvert> results;
+
         results = jobAdvertDao.getAllJobAdverts();
         try
         {

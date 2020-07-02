@@ -1,12 +1,18 @@
 package com.example.jobmanagement.data_models;
 
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+
 @Entity(tableName = "JobAdvertTable")
-public class JobAdvert
-{
+public class JobAdvert implements Parcelable //I implemented this interface to pass object between activities
+{// I will explain everything I did by use of comments
     @PrimaryKey(autoGenerate = true)
     private long id;
     private String jobTitle;
@@ -97,5 +103,81 @@ public class JobAdvert
 
     public void setJobQualification(String jobQualification) {
         this.jobQualification = jobQualification;
+    }
+
+    public JobAdvert()
+    {
+
+    }
+
+    //This constructor is used for parcel
+
+    protected JobAdvert(Parcel in) {
+
+        jobTitle = in.readString();
+        jobSalary = in.readString();
+        jobLocation = in.readString();
+        appointmentType = in.readString();
+        jobPosition = in.readString();
+        jobCompany = in.readString();
+        jobDescription = in.readString();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            isLicence = in.readBoolean();
+        }
+        jobQualification = in.readString();
+    }
+
+    public JobAdvert(String jobTitle, String jobSalary, String jobLocation,
+                     String appointmentType, String jobPosition, String jobCompany,
+                     String jobDescription, Boolean isLicence, String jobQualification)
+    {
+        this.jobTitle = jobTitle;
+        this.jobSalary = jobSalary;
+        this.jobLocation = jobLocation;
+        this.appointmentType = appointmentType;
+        this.jobPosition = jobPosition;
+        this.jobCompany = jobCompany;
+        this.jobDescription = jobDescription;
+        this.isLicence = isLicence;
+        this.jobQualification = jobQualification;
+    }
+
+    //This method binds everything together
+    public static final Creator<JobAdvert> CREATOR = new Creator<JobAdvert>() {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
+        @Override
+        public JobAdvert createFromParcel(Parcel in) {
+            return new JobAdvert(in);
+        }
+
+        @Override
+        public JobAdvert[] newArray(int size) {
+            return new JobAdvert[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static Creator<JobAdvert> getCREATOR() {
+        return CREATOR;
+    }
+
+    //In this method we write class properties to the parcel which we are needed for transfer
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(jobTitle);
+        parcel.writeString(jobSalary);
+        parcel.writeString(jobLocation);
+        parcel.writeString(appointmentType);
+        parcel.writeString(jobCompany);
+        parcel.writeString(jobCompany);
+        parcel.writeString(jobDescription);
+        parcel.writeString(String.valueOf(isLicence));
+        parcel.writeString(jobQualification);
     }
 }

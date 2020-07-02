@@ -8,7 +8,7 @@ import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 
 
-public class InsertJobAdvertAsync extends AsyncTask<Integer, Void, JobAdvert>
+public class InsertJobAdvertAsync extends AsyncTask<JobAdvert, Void, JobAdvert>
 {
     private Context context;
     private AsyncTaskCallback<JobAdvert> callback;
@@ -16,23 +16,22 @@ public class InsertJobAdvertAsync extends AsyncTask<Integer, Void, JobAdvert>
     private JobAdvert jobAdvert;
     private JobAdvertDao jobAdvertDao;
 
-    public InsertJobAdvertAsync (JobAdvert jobAdvert, AsyncTaskCallback<JobAdvert> callback)
+    public InsertJobAdvertAsync (JobAdvertDao jobAdvertDao, AsyncTaskCallback<JobAdvert> callback)
     {
         this.callback = callback;
-        this.jobAdvert = jobAdvert;
+        this.jobAdvertDao = jobAdvertDao;
     }
 
     @Override
-    protected JobAdvert doInBackground(Integer... integers) {
+    protected JobAdvert doInBackground(JobAdvert... jobAdverts) {
 
         exception = null;
-        JobAdvert jobAdvert;
-        jobAdvert = jobAdvertDao.getJobAdvertById(this.jobAdvert.getId());
+        jobAdvert = jobAdvertDao.getJobAdvertById(jobAdverts[0].getId());
         try
         {
             if(jobAdvert == null)
             {
-               jobAdvertDao.insert(this.jobAdvert);
+               jobAdvertDao.insert(jobAdverts[0]);
             }
             else
             {
@@ -44,7 +43,7 @@ public class InsertJobAdvertAsync extends AsyncTask<Integer, Void, JobAdvert>
             exception = e;
         }
 
-        return this.jobAdvert;
+        return jobAdverts[0];
     }
 
     @Override

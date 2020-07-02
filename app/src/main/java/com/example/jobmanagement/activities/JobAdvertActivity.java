@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.app_utilities.AppUtility;
@@ -16,6 +18,8 @@ import com.example.jobmanagement.app_utilities.ApplicationClass;
 import com.example.jobmanagement.data_models.JobAdvert;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,12 +39,14 @@ public class JobAdvertActivity extends AppCompatActivity {
 
     JobAdvertDao jobAdvertDao;
 
+    Boolean licenseFlag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_advert);
 
-        jobAdvert = new JobAdvert();
+         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
 
         lytJobTitle = findViewById(R.id.lytJobTitle);
@@ -77,11 +83,26 @@ public class JobAdvertActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.menu_dropdown);
         dropdownQualification.setAdapter(adapter);
 
+        swLicense = findViewById(R.id.swLicense);
 
+        licenseFlag = false;
 
+        //AppUtility.sharedpreferences = getSharedPreferences("licensePreference", MODE_PRIVATE);
 
+        swLicense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    licenseFlag = true;
+                }
+                else
+                {
+                    licenseFlag = false;
+                }
+            }
+
+        });
     }
-
     public void Save(View view) {
         jobAdvert.setJobTitle(edtJobTitle.getText().toString());
         jobAdvert.setAppointmentType(dropdownAppointType.getText().toString());
@@ -91,24 +112,49 @@ public class JobAdvertActivity extends AppCompatActivity {
         jobAdvert.setJobDescription(edtJobDescription.getText().toString());
         jobAdvert.setJobQualification(dropdownQualification.getText().toString());
         jobAdvert.setJobSalary(edtSalary.getText().toString());
+        jobAdvert.setLicence(licenseFlag);
 
-        if (swLicense.isChecked())
-        {
-            jobAdvert.setLicence(true);
-        }
-        else
-        {
-            jobAdvert.setLicence(false);
-        }
+        new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
+            @Override
+            public void onSuccess(JobAdvert success) {
+                Toast.makeText(getApplicationContext(), success.getJobCompany() +
+                        " successfully added!", Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onException(Exception e) {
+                Toast.makeText(getApplicationContext(),"Error : "
+                        + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }).execute(jobAdvert);
 
+//        String jTitle = edtJobTitle.getText().toString();
+//        String salary = edtSalary.getText().toString();
+//        String aType = dropdownAppointType.getText().toString();
+//        String jPosition = dropdownPosition.getText().toString();
+//        String jLocation = dropdownLocation.getText().toString();
+//        String jCompany = edtAdCompany.getText().toString();
+//        String jDescription = edtJobDescription.getText().toString();
+//        String jQualification = dropdownQualification.getText().toString();
+//
+
+//        if (swLicense.isChecked())
+//        {
+//            jobAdvert.setLicence(true);
+//        }
+//        else
+//        {
+//            jobAdvert.setLicence(false);
+//        }
+
+//        jobAdvert = new JobAdvert(jTitle, salary, jLocation,
+//                                     aType, jPosition, jCompany, jDescription,
+//                                            licenseFlag, jQualification);
 
         Intent intent = new Intent();
-
-        jobAdvertDao.insert(jobAdvert);
-        ApplicationClass.jobAdverts.add(jobAdvert);
-        setResult(RESULT_OK);
-        //AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
+        intent.putExtra("data", jobAdvert);
+        setResult(RESULT_OK, intent);
+//        //AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
         JobAdvertActivity.this.finish();
 
     }

@@ -10,23 +10,24 @@ import com.example.jobmanagement.R;
 import com.example.jobmanagement.data_models.JobAdvert;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
         implements View.OnClickListener
 {
-    private ArrayList<JobAdvert> list;
+    private List<JobAdvert> list;
 
 
-    public DataAdapter(ArrayList<JobAdvert> jobAdvertList)
+    public DataAdapter(List<JobAdvert> jobAdvertList)
     {
         list = jobAdvertList;
     }
 
     @Override
     public int getItemCount() {
-        return ApplicationClass.jobAdverts.size();
+        return list.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder

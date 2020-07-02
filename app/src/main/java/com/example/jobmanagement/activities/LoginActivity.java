@@ -43,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Job Adverts");
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
-        AppUtility.sharedpreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        AppUtility.sharedpreferences = getSharedPreferences("my Preference", MODE_PRIVATE);//PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);

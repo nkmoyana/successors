@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.app_utilities.AppUtility;
@@ -24,9 +25,12 @@ import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_advert.DeleteJobAdvertAsync;
+import com.example.jobmanagement.db_repositories.job_advert.GetAllJobAdvertsAsync;
+import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_application.InsertJobApplicationAsync;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListAdvertActivity extends AppCompatActivity implements CardViewButtonClickListener
 {
@@ -51,13 +55,29 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
         recyclerView = findViewById(R.id.list);
 
-        if (ApplicationClass.jobAdverts != null) {
-            layoutManager = new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
-            adapter = new DataAdapter(ApplicationClass.jobAdverts);
-            recyclerView.setAdapter(adapter);
+            new GetAllJobAdvertsAsync(jobAdvertDao ,new AsyncTaskCallback<List<JobAdvert>>() {
+                @Override
+                public void onSuccess(List<JobAdvert> success) {
+//
+                    if (success.size() != 0)
+                    {
+                        //ApplicationClass.jobAdverts = (ArrayList)success;
+                        layoutManager = new LinearLayoutManager(getApplicationContext());
+                        recyclerView.setLayoutManager(layoutManager);
+                        adapter = new DataAdapter(success);
+                        recyclerView.setAdapter(adapter);
+                    }
+                }
+
+                @Override
+                public void onException(Exception e) {
+                        //Toast Display
+                    Toast.makeText(ListAdvertActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).execute();
+
         }
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -93,9 +113,9 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
     @Override
     public void onEditAdvertClick(JobAdvert jobAdvert) {
-            startActivityForResult(new Intent(ListAdvertActivity.this, JobAdvertActivity.class),
-                    UPDATE_JOB_ADVERT);
-        jobAdvertDao.update(jobAdvert);
+//            startActivityForResult(new Intent(ListAdvertActivity.this, JobAdvertActivity.class),
+//                    UPDATE_JOB_ADVERT);
+//        jobAdvertDao.update(jobAdvert);
     }
 
     @Override
@@ -109,14 +129,14 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         new DeleteJobAdvertAsync(jobAdvert, new AsyncTaskCallback<JobAdvert>() {
             @Override
             public void onSuccess(JobAdvert success) {
-                AppUtility.ShowToast(ListAdvertActivity.this, success.getJobTitle()
-                        + "successfully deleted!!!");
+//                AppUtility.ShowToast(ListAdvertActivity.this, success.getJobTitle()
+//                        + "successfully deleted!!!");
             }
 
             @Override
             public void onException(Exception e) {
-                    AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
-                                e.getMessage());
+//                    AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
+//                                e.getMessage());
             }
         }).execute();
     }
@@ -126,25 +146,28 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         new InsertJobApplicationAsync(jobApplication, new AsyncTaskCallback<JobApplication>() {
             @Override
             public void onSuccess(JobApplication success) {
-
-                AppUtility.ShowToast(ListAdvertActivity.this, success.getProfileId()
-                        + "successfully added!!!");
+//
+//                AppUtility.ShowToast(ListAdvertActivity.this, success.getProfileId()
+//                        + "successfully added!!!");
 
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onException(Exception e) {
-                AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
-                        e.getMessage());
+//                AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
+//                        e.getMessage());
             }
         }).execute();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 1 && resultCode == RESULT_OK)
+        if (requestCode == INSERT_JOB_ADVERT && resultCode == RESULT_OK)
         {
+            //JobAdvert dataBack = data.getParcelableExtra("data");
+
+           // ApplicationClass.jobAdverts.add(dataBack);
 
             adapter.notifyDataSetChanged();
         }
