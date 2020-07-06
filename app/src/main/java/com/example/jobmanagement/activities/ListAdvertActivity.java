@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.jobmanagement.R;
@@ -61,7 +62,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 //
                     if (success.size() != 0)
                     {
-                        //ApplicationClass.jobAdverts = (ArrayList)success;
+                        ApplicationClass.jobAdverts = (ArrayList)success;
                         layoutManager = new LinearLayoutManager(getApplicationContext());
                         recyclerView.setLayoutManager(layoutManager);
                         adapter = new DataAdapter(success);
@@ -104,8 +105,9 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
             case R.id.favorite:
 
             case R.id.add:
-                startActivityForResult(new Intent(ListAdvertActivity.this, JobAdvertActivity.class),
-                        INSERT_JOB_ADVERT);
+                Intent addIntent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
+                addIntent.putExtra("requestCode", INSERT_JOB_ADVERT);
+                startActivityForResult(addIntent, INSERT_JOB_ADVERT);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -113,19 +115,20 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
     @Override
     public void onEditAdvertClick(JobAdvert jobAdvert) {
-//            startActivityForResult(new Intent(ListAdvertActivity.this, JobAdvertActivity.class),
-//                    UPDATE_JOB_ADVERT);
-//        jobAdvertDao.update(jobAdvert);
+        Intent intent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
+        intent.putExtra("requestCode", UPDATE_JOB_ADVERT);
+        startActivityForResult(intent, UPDATE_JOB_ADVERT);
     }
 
     @Override
     public void onViewAdvertClick(int i) {
         Intent intent = new Intent(ListAdvertActivity.this, JobDetailActivity.class);
         intent.putExtra("index", i);
+        startActivity(intent);
     }
 
     @Override
-    public void onDeleteAdvertClick(final JobAdvert jobAdvert) {
+    public void onDeleteAdvertClick(JobAdvert jobAdvert) {
         new DeleteJobAdvertAsync(jobAdvert, new AsyncTaskCallback<JobAdvert>() {
             @Override
             public void onSuccess(JobAdvert success) {
@@ -169,6 +172,10 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
            // ApplicationClass.jobAdverts.add(dataBack);
 
+            adapter.notifyDataSetChanged();
+        }
+        else
+        {
             adapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);

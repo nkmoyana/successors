@@ -223,6 +223,7 @@
             android:background="@drawable/buttons"
             android:drawableLeft="@drawable/save"
             android:text="Update"
+            android:onClick="Update"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
     </LinearLayout>

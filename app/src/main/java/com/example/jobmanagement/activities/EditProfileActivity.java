@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
@@ -44,4 +45,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    public void Update(View view)
+    {
+
+    }
 }

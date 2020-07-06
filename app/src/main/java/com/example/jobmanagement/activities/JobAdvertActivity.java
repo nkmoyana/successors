@@ -1,5 +1,6 @@
 package com.example.jobmanagement.activities;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
+import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -41,12 +43,30 @@ public class JobAdvertActivity extends AppCompatActivity {
 
     Boolean licenseFlag;
 
+    Intent intent;
+
+    int rCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_advert);
 
-         jobAdvert = new JobAdvert();
+        ActionBar actionBar = getSupportActionBar();
+
+        intent = new Intent();
+        rCode = intent.getIntExtra("requestCode", 1);
+
+        if (rCode == 1)
+        {
+            actionBar.setTitle("Insert Job Advert");
+        }
+        else
+        {
+            actionBar.setTitle("Update Job Advert");
+        }
+
+        jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
 
         lytJobTitle = findViewById(R.id.lytJobTitle);
@@ -114,19 +134,40 @@ public class JobAdvertActivity extends AppCompatActivity {
         jobAdvert.setJobSalary(edtSalary.getText().toString());
         jobAdvert.setLicence(licenseFlag);
 
-        new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
-            @Override
-            public void onSuccess(JobAdvert success) {
-                Toast.makeText(getApplicationContext(), success.getJobCompany() +
-                        " successfully added!", Toast.LENGTH_SHORT).show();
-            }
+        switch (rCode)
+        {
+            case 1:
+            new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
+                @Override
+                public void onSuccess(JobAdvert success) {
+                    Toast.makeText(getApplicationContext(), success.getJobCompany() +
+                            " successfully added!", Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onException(Exception e) {
-                Toast.makeText(getApplicationContext(),"Error : "
-                        + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }).execute(jobAdvert);
+                @Override
+                public void onException(Exception e) {
+
+                }
+            }).execute(jobAdvert);
+            break;
+            case 2:
+                btnSave.setText("Update");
+                new UpdateJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
+                    @Override
+                    public void onSuccess(JobAdvert success) {
+                        Toast.makeText(getApplicationContext(), success.getId() +
+                                "successfully updated", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onException(Exception e) {
+                        Toast.makeText(getApplicationContext(),"Error : "
+                                + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }).execute(jobAdvert);
+                break;
+        }
+
 
 //        String jTitle = edtJobTitle.getText().toString();
 //        String salary = edtSalary.getText().toString();

@@ -1,5 +1,6 @@
 package com.example.jobmanagement.app_utilities;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,6 @@ import android.widget.TextView;
 import com.example.jobmanagement.R;
 import com.example.jobmanagement.data_models.JobAdvert;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +18,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
         implements View.OnClickListener
 {
     private List<JobAdvert> list;
-
+    private CardViewButtonClickListener activityCallBack;
+    private int i;
 
     public DataAdapter(List<JobAdvert> jobAdvertList)
     {
@@ -70,6 +71,19 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
 
         ViewHolder viewHolder = new ViewHolder(v);
 
+        ImageView ivApply = v.findViewById(R.id.ivApply);
+        ivApply.setOnClickListener(this);
+
+        ImageView ivInfo = v.findViewById(R.id.ivInfo);
+        ivInfo.setOnClickListener(this);
+
+        ImageView ivUpdate = v.findViewById(R.id.ivUpdate);
+        ivUpdate.setOnClickListener(this);
+
+        ImageView ivDelete = v.findViewById(R.id.ivDelete);
+        ivDelete.setOnClickListener(this);
+
+
         return viewHolder;
     }
 
@@ -84,22 +98,73 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
         viewHolder.itemSalary.setText(list.get(i).getJobSalary());
 
     }
-    @Override
-    public void onClick(View view) {
 
+    //Just Testing, please verify
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        try{
+            if (recyclerView.getContext() instanceof CardViewButtonClickListener)
+            {
+                activityCallBack = (CardViewButtonClickListener) recyclerView.getContext();
+            }
+            else
+            {
+                throw new ClassCastException(recyclerView.getContext().toString()
+                        + "must implement DataAdapter.CardViewButtonClickListener");
+            }
+        }
+        catch (ClassCastException e)
+        {
+            Log.e("ClassCastException", e.getMessage());
+        }
+    }
+
+   private void UpdateImageViewFunc(JobAdvert jobAdvert)
+   {
+       activityCallBack.onEditAdvertClick(jobAdvert);
+   }
+
+    private void InfoImageViewFunc(int index)
+    {
+        activityCallBack.onViewAdvertClick(index);
+    }
+
+   private void ApplyImageViewFunc(ImageView ivApply)
+   {
+       ivApply.setImageResource(R.drawable.favorite);
+   }
+
+   private void DeleteImageViewFunc(JobAdvert jobAdvert)
+   {
+       activityCallBack.onDeleteAdvertClick(jobAdvert);
+   }
+
+    @Override
+    public  void onClick(View view) {
+
+        i = list.indexOf((JobAdvert) view.getTag());
         ImageView ivApply;
         ivApply = view.findViewById(R.id.ivApply);
+
         switch(view.getId())
         {
-            case R.id.ivApply:
-                ivApply.setImageResource(R.drawable.favorite);
+            case R.id.ivUpdate:
+                UpdateImageViewFunc(list.get(0));
                 break;
 
-                //Needs modifications
-//            case R.id.ivInfo:
-//            case R.id.ivUpdate:
-//            case R.id.ivDelete:
-//                break;
+            case R.id.ivInfo:
+                InfoImageViewFunc(0);
+                break;
+
+            case R.id.ivApply:
+                ApplyImageViewFunc(ivApply);
+                break;
+
+            case R.id.ivDelete:
+                DeleteImageViewFunc(list.get(i));
+                break;
         }
     }
 }
