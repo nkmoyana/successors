@@ -57,7 +57,7 @@ public class AppUtility extends Application
         else if (results == 3)
         {
             ivToast.setImageResource(R.drawable.info);
-            tvMessage.setTextColor(Color.blue(225));
+            tvMessage.setTextColor(Color.BLUE);
             Toast toast = new Toast(context);
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL, 0, 0);

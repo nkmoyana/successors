@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -127,8 +128,13 @@ public class JobAdvertActivity extends AppCompatActivity {
         new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
             @Override
             public void onSuccess(JobAdvert success) {
-                Toast.makeText(getApplicationContext(), success.getJobCompany() +
-                        " successfully added!", Toast.LENGTH_SHORT).show();
+
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                AppUtility.ShowToast(getApplicationContext(), success.getJobCompany() + " successfully added!", toastView,1);
+
+//                Toast.makeText(getApplicationContext(), success.getJobCompany() +
+//                        " successfully added!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
