@@ -133,7 +133,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
 
    private void ApplyImageViewFunc(ImageView ivApply)
    {
-       ivApply.setImageResource(R.drawable.favorite);
+       ivApply.setImageResource(R.drawable.dark_favourite);
    }
 
    private void DeleteImageViewFunc(JobAdvert jobAdvert)
@@ -163,7 +163,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder>
                 break;
 
             case R.id.ivDelete:
-                DeleteImageViewFunc(list.get(i));
+                DeleteImageViewFunc(list.get(0));
                 break;
         }
     }

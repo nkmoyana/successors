@@ -6,33 +6,33 @@ import com.example.jobmanagement.data_models.JobAdvert;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 
-public class DeleteJobAdvertAsync extends AsyncTask<Integer, Void, JobAdvert>
+public class DeleteJobAdvertAsync extends AsyncTask<JobAdvert, Void, JobAdvert>
 {
     private AsyncTaskCallback<JobAdvert> callback;
     private Exception exception;
     private JobAdvert jobAdvert;
     private JobAdvertDao jobAdvertDao;
 
-    public DeleteJobAdvertAsync (JobAdvert jobAdvert, AsyncTaskCallback<JobAdvert> callback)
+    public DeleteJobAdvertAsync (JobAdvertDao jobAdvertDao, AsyncTaskCallback<JobAdvert> callback)
     {
         this.callback = callback;
-        this.jobAdvert = jobAdvert;
+        this.jobAdvertDao = jobAdvertDao;
     }
 
     @Override
-    protected JobAdvert doInBackground(Integer... integers) {
+    protected JobAdvert doInBackground(JobAdvert... jobAdverts) {
 
         exception = null;
         try
         {
-            jobAdvertDao.delete(this.jobAdvert.getId());
+            jobAdvertDao.delete(jobAdverts[0].getId());
         }
         catch (Exception e)
         {
             exception = e;
         }
 
-        return this.jobAdvert;
+        return jobAdverts[0];
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.jobmanagement.R;
@@ -27,7 +28,6 @@ import com.example.jobmanagement.db_operations.JobAdvertDao;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_advert.DeleteJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_advert.GetAllJobAdvertsAsync;
-import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_application.InsertJobApplicationAsync;
 
 import java.util.ArrayList;
@@ -55,6 +55,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         jobAdvertDao = Connections.getInstance(ListAdvertActivity.this).getDatabase().getJobAdvertDao();
 
         recyclerView = findViewById(R.id.list);
+
 
             new GetAllJobAdvertsAsync(jobAdvertDao ,new AsyncTaskCallback<List<JobAdvert>>() {
                 @Override
@@ -88,7 +89,6 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId())
         {
             case R.id.editProfile:
@@ -103,7 +103,6 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
                 startActivity(new Intent(ListAdvertActivity.this, LoginActivity.class));
                 ListAdvertActivity.this.finish();
             case R.id.favorite:
-
             case R.id.add:
                 Intent addIntent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
                 addIntent.putExtra("requestCode", INSERT_JOB_ADVERT);
@@ -129,19 +128,25 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
     @Override
     public void onDeleteAdvertClick(JobAdvert jobAdvert) {
-        new DeleteJobAdvertAsync(jobAdvert, new AsyncTaskCallback<JobAdvert>() {
+        new DeleteJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
             @Override
             public void onSuccess(JobAdvert success) {
+                Toast.makeText(ListAdvertActivity.this,
+                        success.getJobTitle() + " successfully deleted!",
+                        Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
 //                AppUtility.ShowToast(ListAdvertActivity.this, success.getJobTitle()
 //                        + "successfully deleted!!!");
             }
 
             @Override
             public void onException(Exception e) {
+                Toast.makeText(ListAdvertActivity.this, "Error : " +
+                        e.getMessage(), Toast.LENGTH_SHORT).show();
 //                    AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
 //                                e.getMessage());
             }
-        }).execute();
+        }).execute(jobAdvert);
     }
 
     @Override
@@ -150,14 +155,16 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
             @Override
             public void onSuccess(JobApplication success) {
 //
+                Toast.makeText(ListAdvertActivity.this, "Job Advert successfully applied to",
+                        Toast.LENGTH_SHORT).show();
 //                AppUtility.ShowToast(ListAdvertActivity.this, success.getProfileId()
 //                        + "successfully added!!!");
-
-                adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onException(Exception e) {
+                Toast.makeText(ListAdvertActivity.this, "Error : " +
+                        e.getMessage(), Toast.LENGTH_SHORT).show();
 //                AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
 //                        e.getMessage());
             }

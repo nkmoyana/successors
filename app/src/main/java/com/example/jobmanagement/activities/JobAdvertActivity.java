@@ -53,18 +53,7 @@ public class JobAdvertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_advert);
 
         ActionBar actionBar = getSupportActionBar();
-
-        intent = new Intent();
-        rCode = intent.getIntExtra("requestCode", 1);
-
-        if (rCode == 1)
-        {
-            actionBar.setTitle("Insert Job Advert");
-        }
-        else
-        {
-            actionBar.setTitle("Update Job Advert");
-        }
+        actionBar.setTitle("Insert Job Advert");
 
         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
@@ -134,41 +123,19 @@ public class JobAdvertActivity extends AppCompatActivity {
         jobAdvert.setJobSalary(edtSalary.getText().toString());
         jobAdvert.setLicence(licenseFlag);
 
-        switch (rCode)
-        {
-            case 1:
-            new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
-                @Override
-                public void onSuccess(JobAdvert success) {
-                    Toast.makeText(getApplicationContext(), success.getJobCompany() +
-                            " successfully added!", Toast.LENGTH_SHORT).show();
-                }
 
-                @Override
-                public void onException(Exception e) {
+        new InsertJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
+            @Override
+            public void onSuccess(JobAdvert success) {
+                Toast.makeText(getApplicationContext(), success.getJobCompany() +
+                        " successfully added!", Toast.LENGTH_SHORT).show();
+            }
 
-                }
-            }).execute(jobAdvert);
-            break;
-            case 2:
-                btnSave.setText("Update");
-                new UpdateJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
-                    @Override
-                    public void onSuccess(JobAdvert success) {
-                        Toast.makeText(getApplicationContext(), success.getId() +
-                                "successfully updated", Toast.LENGTH_SHORT).show();
-                    }
+            @Override
+            public void onException(Exception e) {
 
-                    @Override
-                    public void onException(Exception e) {
-                        Toast.makeText(getApplicationContext(),"Error : "
-                                + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }).execute(jobAdvert);
-                break;
-        }
-
-
+            }
+        }).execute(jobAdvert);
 //        String jTitle = edtJobTitle.getText().toString();
 //        String salary = edtSalary.getText().toString();
 //        String aType = dropdownAppointType.getText().toString();
