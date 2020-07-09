@@ -97,11 +97,13 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
                 String email = AppUtility.sharedpreferences.getString("email", "");
                 intent.putExtra("email", email);
                 startActivity(intent);
+                break;
             case R.id.logout:
                 AppUtility.sharedpreferences.edit().putString("email", "").apply();
                 AppUtility.sharedpreferences.edit().putString("password", "").apply();
                 startActivity(new Intent(ListAdvertActivity.this, LoginActivity.class));
                 ListAdvertActivity.this.finish();
+                break;
             case R.id.favorite:
             case R.id.add:
                 Intent addIntent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);

@@ -35,7 +35,6 @@ public class JobAdvertActivity extends AppCompatActivity {
     AutoCompleteTextView dropdownAppointType, dropdownPosition, dropdownLocation,dropdownQualification;
 
     Switch swLicense;
-    Button btnSave;
 
     JobAdvert jobAdvert;
 
@@ -53,7 +52,7 @@ public class JobAdvertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_advert);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Insert Job Advert");
+        actionBar.setTitle("Edit Job Advert");
 
         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
