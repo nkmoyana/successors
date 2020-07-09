@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -74,7 +75,12 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
                 @Override
                 public void onException(Exception e) {
                         //Toast Display
-                    Toast.makeText(ListAdvertActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+
+//                    Toast.makeText(ListAdvertActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).execute();
 
@@ -133,9 +139,14 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         new DeleteJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
             @Override
             public void onSuccess(JobAdvert success) {
-                Toast.makeText(ListAdvertActivity.this,
-                        success.getJobTitle() + " successfully deleted!",
-                        Toast.LENGTH_SHORT).show();
+
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                AppUtility.ShowToast(ListAdvertActivity.this, " successfully deleted!", toastView,3);
+
+//                Toast.makeText(ListAdvertActivity.this,
+//                        success.getJobTitle() + " successfully deleted!",
+//                        Toast.LENGTH_SHORT).show();
                 adapter.notifyDataSetChanged();
 //                AppUtility.ShowToast(ListAdvertActivity.this, success.getJobTitle()
 //                        + "successfully deleted!!!");
@@ -143,8 +154,13 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
             @Override
             public void onException(Exception e) {
-                Toast.makeText(ListAdvertActivity.this, "Error : " +
-                        e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+
+//                Toast.makeText(ListAdvertActivity.this, "Error : " +
+//                        e.getMessage(), Toast.LENGTH_SHORT).show();
 //                    AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
 //                                e.getMessage());
             }
@@ -156,19 +172,27 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         new InsertJobApplicationAsync(jobApplication, new AsyncTaskCallback<JobApplication>() {
             @Override
             public void onSuccess(JobApplication success) {
-//
-                Toast.makeText(ListAdvertActivity.this, "Job Advert successfully applied to",
-                        Toast.LENGTH_SHORT).show();
+
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                AppUtility.ShowToast(ListAdvertActivity.this, "Job Advert successfully applied to", toastView,1);
+
+//                Toast.makeText(ListAdvertActivity.this, "Job Advert successfully applied to",
+//                        Toast.LENGTH_SHORT).show();
 //                AppUtility.ShowToast(ListAdvertActivity.this, success.getProfileId()
 //                        + "successfully added!!!");
             }
 
             @Override
             public void onException(Exception e) {
-                Toast.makeText(ListAdvertActivity.this, "Error : " +
-                        e.getMessage(), Toast.LENGTH_SHORT).show();
-//                AppUtility.ShowToast(ListAdvertActivity.this, "Error : " +
-//                        e.getMessage());
+
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+
+//                Toast.makeText(ListAdvertActivity.this, "Error : " +
+//                        e.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         }).execute();
     }
