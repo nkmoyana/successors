@@ -53,7 +53,7 @@ public class JobAdvertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_advert);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Edit Job Advert");
+        actionBar.setTitle("Insert Job Advert");
 
         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();

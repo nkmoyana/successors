@@ -99,7 +99,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         {
             case R.id.editProfile:
 
-                Intent intent = new Intent(ListAdvertActivity.this, EditProfileActivity.class);
+                Intent intent = new Intent(ListAdvertActivity.this, ProfileActivity.class);
                 String email = AppUtility.sharedpreferences.getString("email", "");
                 intent.putExtra("email", email);
                 startActivity(intent);
