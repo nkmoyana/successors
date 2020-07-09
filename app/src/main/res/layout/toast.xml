@@ -2,29 +2,19 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:background="#000000"
     android:id="@+id/toastLinLay"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    style="@style/toast_layout"
+    android:background="#000000">
 
     <ImageView
         android:id="@+id/ivToast"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        style="@style/toast_image"
+        android:contentDescription="@string/check"
         app:srcCompat="@drawable/check" />
 
     <TextView
         android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="4"
-        android:text="TextView"
-        android:textColor="#07750B"
-        android:textSize="18sp" />
+        style="@style/toast_text"
+        android:text="@string/empty_string"
+        />
 </LinearLayout>

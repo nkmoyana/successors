@@ -1,28 +1,24 @@
 package com.example.jobmanagement.activities;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
-import android.view.ViewGroup;
+import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
-
+import android.view.ViewGroup;
+import android.content.Intent;
 import com.example.jobmanagement.R;
-import com.example.jobmanagement.app_utilities.AppUtility;
+import android.widget.CompoundButton;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobProfile;
+import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobProfileDao;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_profile.FindJobProfileAsync;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -39,8 +35,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Job Adverts");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.job_adverts);
+        }
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
 
@@ -53,6 +50,43 @@ public class LoginActivity extends AppCompatActivity {
         keepLogged = findViewById(R.id.swKeepLogged);
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin =findViewById(R.id.btnLogin);
+
+        etEmail.setHint(R.string.empty_string);
+        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    etEmail.setHint(R.string.enter_email_address);
+                } else {
+                    etEmail.setHint(R.string.empty_string);
+                }
+            }
+        });
+
+
+        etPassword.setHint(R.string.empty_string);
+        etPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    etPassword.setHint(R.string.please_enter_password);
+                } else {
+                    etPassword.setHint(R.string.empty_string);
+                }
+            }
+        });
+
+
+        keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    AppUtility.sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
+                    AppUtility.sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
+                }
+            }
+        });
 
         keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -82,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-            AppUtility.ShowToast(LoginActivity.this, "Please enter all fields", toastView,2);        }
+            AppUtility.ShowToast(LoginActivity.this, getString(R.string.enter_all_fields), toastView,2);        }
         else
         {
             String userEmail, password;

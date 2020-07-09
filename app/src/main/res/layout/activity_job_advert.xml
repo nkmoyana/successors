@@ -8,214 +8,135 @@
     tools:context=".activities.JobAdvertActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:gravity="center"
-        android:text="Job Advert"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        style="@style/basic_layout">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytJobTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter job title"
-        app:startIconContentDescription="info"
-        app:startIconDrawable="@drawable/info">
+        <TextView
+            android:id="@+id/textView"
+            style="@style/header"
+            android:text="@string/job_advert" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtJobTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/lytJobTitle"
+            android:hint="@string/enter_job_title"
+            app:startIconContentDescription="@string/info"
+            app:startIconDrawable="@drawable/info">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtJobTitle"
+                style="@style/job_edit_text"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytAppointmentType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/info"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        app:endIconMode="dropdown_menu"
-        android:hint="Select appointment type"
-        app:boxBackgroundMode="outline">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_appoint_type"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Appointment Type"
-            android:cursorVisible="false"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/dropdown_input_layout"
+            android:id="@+id/lytAppointmentType"
+            app:startIconDrawable="@drawable/info"
+            android:hint="@string/empty_string">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_appoint_type"
+                android:labelFor="@id/dropdown_appoint_type"
+                style="@style/dropdown_auto_edit_text"
+                android:text="@string/appointment_type" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytJobPosition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/info"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        app:endIconMode="dropdown_menu"
-        android:hint="Select job position"
-        app:boxBackgroundMode="outline">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_job_position"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Job Position"
-            android:cursorVisible="false"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/dropdown_input_layout"
+            android:id="@+id/lytJobPosition"
+            app:startIconDrawable="@drawable/info"
+            android:hint="@string/empty_string">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_job_position"
+                android:labelFor="@id/dropdown_job_position"
+                style="@style/dropdown_auto_edit_text"
+                android:text="@string/job_position" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytJobLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/info"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        app:endIconMode="dropdown_menu"
-        android:hint="Select job location"
-        app:boxBackgroundMode="outline">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_job_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Job Location"
-            android:cursorVisible="false"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/dropdown_input_layout"
+            android:id="@+id/lytJobLocation"
+            app:startIconDrawable="@drawable/info"
+            android:hint="@string/empty_string" >
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_job_location"
+                android:labelFor="@id/dropdown_job_location"
+                style="@style/dropdown_auto_edit_text"
+                android:text="@string/job_location" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytAdCompany"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter Advertising Company"
-        app:startIconContentDescription="info"
-        app:startIconDrawable="@drawable/company">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtAdCompany"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/lytAdCompany"
+            android:hint="@string/enter_advertising_company"
+            app:startIconContentDescription="@string/company"
+            app:startIconDrawable="@drawable/company">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtAdCompany"
+                style="@style/company_edit_text"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytJobDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter Job Description"
-        app:startIconContentDescription="info"
-        app:startIconDrawable="@drawable/info">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtJobDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/lytJobDescription"
+            android:hint="@string/enter_job_description"
+            app:startIconContentDescription="@string/info"
+            app:startIconDrawable="@drawable/info">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtJobDescription"
+                style="@style/company_edit_text" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytMinQualification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:startIconDrawable="@drawable/qualification"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        app:endIconMode="dropdown_menu"
-        android:hint="Select Minimum Qualification"
-        app:boxBackgroundMode="outline">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <AutoCompleteTextView
-            android:id="@+id/dropdown_min_qualification"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Minimum Qualification"
-            android:cursorVisible="false"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/dropdown_input_layout"
+            android:id="@+id/lytMinQualification"
+            app:startIconDrawable="@drawable/qualification"
+            android:hint="@string/empty_string">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <AutoCompleteTextView
+                android:id="@+id/dropdown_min_qualification"
+                android:labelFor="@id/dropdown_min_qualification"
+                style="@style/dropdown_auto_edit_text"
+                android:text="@string/minimum_qualification" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:id="@+id/lytSalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter Monthly Gross Salary"
-        app:startIconContentDescription="info"
-        app:startIconDrawable="@drawable/money">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edtSalary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/text_input_layout"
+            android:id="@+id/lytSalary"
+            android:hint="@string/enter_monthly_gross_salary"
+            app:startIconContentDescription="@string/money"
+            app:startIconDrawable="@drawable/money">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edtSalary"
+                style="@style/money_edit_text"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Switch
-            android:id="@+id/swLicense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Switch" />
+        <LinearLayout
+            style="@style/list_act_horizontal_layout3">
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/buttons"
-            android:drawableLeft="@drawable/save"
-            android:text="Save"
-            android:onClick="Save"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            <Switch
+                android:id="@+id/swLicense"
+                style="@style/switch_2"
+                android:text="@string/license_required" />
+
+            <Button
+                android:id="@+id/btnSave"
+                style="@style/button"
+                android:background="@drawable/buttons"
+                android:drawableStart="@drawable/save"
+                android:text="@string/save" />
         </LinearLayout>
 
     </LinearLayout>

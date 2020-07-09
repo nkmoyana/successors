@@ -1,38 +1,33 @@
 package com.example.jobmanagement.activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
+import java.util.List;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import java.util.ArrayList;
+import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
+import android.content.Intent;
 import com.example.jobmanagement.R;
-import com.example.jobmanagement.app_utilities.AppUtility;
-import com.example.jobmanagement.app_utilities.ApplicationClass;
-import com.example.jobmanagement.app_utilities.CardViewButtonClickListener;
-import com.example.jobmanagement.app_utilities.DataAdapter;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.jobmanagement.data_models.JobAdvert;
-import com.example.jobmanagement.data_models.JobApplication;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
+import com.example.jobmanagement.app_utilities.DataAdapter;
+import com.example.jobmanagement.data_models.JobApplication;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.example.jobmanagement.app_utilities.ApplicationClass;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.app_utilities.CardViewButtonClickListener;
 import com.example.jobmanagement.db_repositories.job_advert.DeleteJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_advert.GetAllJobAdvertsAsync;
 import com.example.jobmanagement.db_repositories.job_application.InsertJobApplicationAsync;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class ListAdvertActivity extends AppCompatActivity implements CardViewButtonClickListener
 {
@@ -50,8 +45,10 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_advert);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Job Adverts");
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle(R.string.insert_job_advert);
+        }
 
         jobAdvertDao = Connections.getInstance(ListAdvertActivity.this).getDatabase().getJobAdvertDao();
 

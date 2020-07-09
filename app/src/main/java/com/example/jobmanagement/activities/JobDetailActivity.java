@@ -1,12 +1,10 @@
 package com.example.jobmanagement.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 import com.example.jobmanagement.R;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.app_utilities.ApplicationClass;
 
 public class JobDetailActivity extends AppCompatActivity {
@@ -23,10 +21,10 @@ public class JobDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_job_detail);
 
         tvJobTitle = findViewById(R.id.tvJobTitle);
-        tvJobLocation = findViewById(R.id.tvAdCompany);
+        tvJobLocation = findViewById(R.id.tvJobLocation);
         tvAdCompany = findViewById(R.id.tvAdCompany);
 
-        tvMinQualification = findViewById(R.id.tvAdCompany);
+        tvMinQualification = findViewById(R.id.tvMinQualification);
         tvSalary = findViewById(R.id.tvSalary);
         tvAppointment = findViewById(R.id.tvAppointment);
 
