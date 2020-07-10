@@ -164,11 +164,11 @@ public class JobAdvertActivity extends AppCompatActivity {
 //                                     aType, jPosition, jCompany, jDescription,
 //                                            licenseFlag, jQualification);
 
-        Intent intent = new Intent();
-        intent.putExtra("data", jobAdvert);
-        setResult(RESULT_OK, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra("data", jobAdvert);
+//        setResult(RESULT_OK, intent);
 //        //AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
-        JobAdvertActivity.this.finish();
+//        JobAdvertActivity.this.finish();
 
     }
 }
