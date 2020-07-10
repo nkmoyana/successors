@@ -1,30 +1,25 @@
 package com.example.jobmanagement.activities;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
-
+import android.view.ViewGroup;
+import android.content.Intent;
 import com.example.jobmanagement.R;
-import com.example.jobmanagement.app_utilities.AppUtility;
-import com.example.jobmanagement.app_utilities.ApplicationClass;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.AutoCompleteTextView;
+import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobAdvert;
+import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
 import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
-import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+
+
 
 public class JobAdvertActivity extends AppCompatActivity {
 
@@ -43,17 +38,15 @@ public class JobAdvertActivity extends AppCompatActivity {
 
     Boolean licenseFlag;
 
-    Intent intent;
-
-    int rCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_advert);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Insert Job Advert");
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setTitle(R.string.insert_job_advert);
+        }
 
         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
@@ -104,12 +97,66 @@ public class JobAdvertActivity extends AppCompatActivity {
                 if (isChecked) {
                     licenseFlag = true;
                 }
-                else
-                {
                     licenseFlag = false;
-                }
+
             }
 
+        });
+
+        edtJobTitle.setHint(R.string.empty_string);
+        edtJobTitle.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    edtJobTitle.setHint(R.string.enter_job_title);
+                }
+                else
+                {
+                    edtJobTitle.setHint(R.string.empty_string);
+                }
+            }
+        });
+
+        edtAdCompany.setHint(R.string.empty_string);
+        edtAdCompany.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    edtAdCompany.setHint(R.string.enter_advertising_company);
+                }
+                else
+                {
+                    edtAdCompany.setHint(R.string.empty_string);
+                }
+            }
+        });
+
+        edtJobDescription.setHint(R.string.empty_string);
+        edtJobDescription.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    edtJobDescription.setHint(R.string.enter_job_description);
+                }
+                else
+                {
+                    edtJobDescription.setHint(R.string.empty_string);
+                }
+            }
+        });
+
+        edtSalary.setHint(R.string.empty_string);
+        edtSalary.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus){
+                    edtSalary.setHint(R.string.enter_monthly_gross_salary);
+                }
+                else
+                {
+                    edtSalary.setHint(R.string.empty_string);
+                }
+            }
         });
     }
     public void Save(View view) {

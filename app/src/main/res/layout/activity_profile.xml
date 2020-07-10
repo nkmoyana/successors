@@ -8,233 +8,150 @@
     tools:context=".activities.ProfileActivity">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        style="@style/basic_layout">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:text="Register Profile"
-            android:textSize="36sp"
-            android:textStyle="bold" />
-
+            style="@style/header"
+            android:text="@string/register_profile" />
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/lytEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/enter_email_address"
+            style="@style/text_input_layout"
+            app:startIconContentDescription="@string/email"
             app:endIconMode="clear_text"
-            android:hint="Enter email address"
-            app:startIconContentDescription="email"
             app:startIconDrawable="@drawable/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                style="@style/email_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:id="@+id/lytPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Password"
-            app:boxBackgroundMode="outline"
+            style="@style/password_text_input_layout"
+            android:hint="@string/password"
+            app:startIconContentDescription="@string/password"
             app:endIconMode="password_toggle"
-            app:startIconContentDescription="email"
             app:startIconDrawable="@drawable/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                style="@style/password_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/password_text_input_layout"
             android:id="@+id/lytConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Password"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/confirm_password"
+            app:startIconContentDescription="@string/confirm_password"
             app:endIconMode="password_toggle"
-            app:startIconContentDescription="confirm email"
             app:startIconDrawable="@drawable/password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtConfirmPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                style="@style/password_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/text_input_layout"
             android:id="@+id/lytFirstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="First Name"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/first_name"
+            app:startIconContentDescription="@string/first_name"
             app:endIconMode="clear_text"
-            app:startIconContentDescription="first name"
             app:startIconDrawable="@drawable/person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
+                style="@style/name_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/text_input_layout"
             android:id="@+id/lytLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Last Name"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/last_name"
+            app:startIconContentDescription="@string/last_name"
             app:endIconMode="clear_text"
-            app:startIconContentDescription="last name"
             app:startIconDrawable="@drawable/person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtLastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName" />
+                style="@style/name_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/text_input_layout"
             android:id="@+id/lytCellNr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Cellphone Number"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/cellphone_number"
+            app:startIconContentDescription="string/cellphone_number"
             app:endIconMode="clear_text"
-            app:startIconContentDescription="cellphone number"
             app:startIconDrawable="@drawable/phone">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtCellNr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
+                style="@style/nr_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/text_input_layout"
             android:id="@+id/lytId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Identity Number"
-            app:boxBackgroundMode="outline"
+            android:hint="@string/identity_number"
+            app:startIconContentDescription="@string/identity_number"
             app:endIconMode="clear_text"
             app:counterEnabled="true"
             app:counterMaxLength="13"
-            app:startIconContentDescription="identity number"
             app:startIconDrawable="@drawable/person">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
+                style="@style/nr_edit_text"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/edit_text"
             android:id="@+id/lytQualification_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:hint="Highest Qualification"
-            android:textSize="8sp"
             app:startIconDrawable="@drawable/qualification"
             app:endIconMode="dropdown_menu"
+            android:text="@string/education_level"
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/auto_edit_text"
+                android:hint="@string/select_education_level"
                 android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/edit_text"
             android:id="@+id/lytField_dropdown"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:startIconDrawable="@drawable/qualification"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
             app:endIconMode="dropdown_menu"
-            android:hint="Field of Study"
-            android:textSize="8sp"
+            android:text="@string/field_of_study"
             app:boxBackgroundMode="outline">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text_field"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                style="@style/auto_edit_text"
+                android:hint="@string/select_field_of_study"
                 android:cursorVisible="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
+            style="@style/button"
             android:background="@drawable/buttons"
-            android:drawableLeft="@drawable/save"
-            android:onClick="Register"
-            android:text="Register"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:drawableStart="@drawable/save"
+            android:text="@string/register" />
     </LinearLayout>
 </ScrollView>

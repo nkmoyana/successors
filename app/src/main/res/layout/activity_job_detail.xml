@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,104 +8,71 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_hiring_now" />
+        android:contentDescription="@string/now_hiring"
+        style="@style/job_activity_image" />
 
     <TextView
         android:id="@+id/tvJobTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:text="TextView" />
+        style="@style/header"
+        android:text="" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="horizontal">
+        style="@style/list_act_horizontal_layout">
 
         <TextView
             android:id="@+id/tvJobLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/location"
-            android:drawableTint="@android:color/black"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_location"
+            android:text="" />
 
         <TextView
             android:id="@+id/tvAdCompany"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/company"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_company"
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="horizontal">
+        style="@style/list_act_horizontal_layout">
 
         <TextView
             android:id="@+id/tvMinQualification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/qualification"
-            android:drawableTint="@android:color/black"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_qualification"
+            android:text="" />
 
         <TextView
             android:id="@+id/tvSalary"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/money"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_money"
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:orientation="horizontal">
+        style="@style/list_act_horizontal_layout">
 
         <TextView
             android:id="@+id/tvAppointment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/info"
-            android:drawableTint="@android:color/black"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_info"
+            android:text="" />
 
         <TextView
             android:id="@+id/tvPosition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/info"
-            android:layout_weight="1"
-            android:text="TextView" />
+            style="@style/list_activity_text"
+            android:drawableStart="@drawable/dark_info"
+            android:text="" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvJobDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/info"
-        android:layout_weight="1"
-        android:text="TextView" />
+    <LinearLayout
+        style="@style/list_act_horizontal_layout">
+
+
+        <TextView
+            android:id="@+id/tvJobDescription"
+            style="@style/list_activity_text2"
+            android:drawableStart="@drawable/dark_info"
+            android:text="" />
+    </LinearLayout>
 
 </LinearLayout>

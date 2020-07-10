@@ -1,129 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_view"
+<androidx.cardview.widget.CardView android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        style="@style/basic_layout">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            style="@style/basic_layout"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/list_activity_image"
+                android:contentDescription="@string/now_hiring"
                 app:srcCompat="@drawable/ic_hiring_now" />
 
             <TextView
                 android:id="@+id/tvJobTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
-                android:gravity="center_horizontal"
-                android:text="TextView"
-                android:textSize="18dp"
-                android:textStyle="bold" />
+                style="@style/row_header"
+                android:text="@string/empty_string" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:orientation="horizontal">
+            style="@style/list_act_horizontal_layout">
 
             <TextView
                 android:id="@+id/tvJobLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/location"
-                android:drawableTint="@android:color/black"
-                android:layout_weight="1"
-                android:text="TextView" />
+                style="@style/list_activity_text"
+                android:drawableStart="@drawable/dark_location"
+                android:text="@string/empty_string" />
 
             <TextView
                 android:id="@+id/tvAdCompany"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/company"
-                android:layout_weight="1"
-                android:text="TextView" />
+                style="@style/list_activity_text"
+                android:drawableStart="@drawable/dark_company"
+                android:text="@string/empty_string" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:orientation="horizontal">
+            style="@style/list_act_horizontal_layout">
 
             <TextView
                 android:id="@+id/tvMinQualification"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/qualification"
-                android:drawableTint="@android:color/black"
-                android:layout_weight="1"
-                android:text="TextView" />
+                style="@style/list_activity_text"
+                android:drawableStart="@drawable/dark_qualification"
+                android:text="@string/empty_string" />
 
             <TextView
                 android:id="@+id/tvSalary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/list_activity_text"
                 android:drawableStart="@drawable/money"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:text="@string/empty_string" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:orientation="horizontal">
+            style="@style/list_act_horizontal_layout">
 
             <ImageView
                 android:id="@+id/ivApply"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:clickable="true"
+                style="@style/list_activity_icons"
+                android:contentDescription="@string/favorite"
                 app:srcCompat="@drawable/favorite_border" />
 
             <ImageView
                 android:id="@+id/ivInfo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:clickable="true"
+                style="@style/list_activity_icons"
+                android:contentDescription="@string/info"
                 app:srcCompat="@drawable/baseline_info" />
 
             <ImageView
                 android:id="@+id/ivUpdate"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:clickable="true"
+                style="@style/list_activity_icons"
+                android:contentDescription="@string/edit"
                 app:srcCompat="@drawable/edit" />
 
             <ImageView
                 android:id="@+id/ivDelete"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:clickable="true"
+                style="@style/list_activity_icons"
+                android:contentDescription="@string/delete"
                 app:srcCompat="@drawable/delete" />
         </LinearLayout>
 

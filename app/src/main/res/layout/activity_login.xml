@@ -9,104 +9,64 @@
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
-        android:text="Job Adverts"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        android:id="@+id/textView"
+        android:text="@string/job_adverts"
+        style="@style/header"
+        />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="194dp"
-        android:layout_height="179dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
+        style="@style/login_image"
+        android:contentDescription="@string/apply_image"
         app:srcCompat="@drawable/icon_sign_up" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lytEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Enter email address"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:endIconMode="clear_text"
-        app:boxBackgroundMode="outline"
-        app:startIconContentDescription="email"
+        android:hint="@string/email_address"
+        style="@style/text_input_layout"
+        app:startIconContentDescription="@string/email"
         app:startIconDrawable="@drawable/email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
+            style="@style/email_edit_text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lytPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:hint="Password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxBackgroundMode="outline"
-        app:endIconMode="password_toggle"
-        app:startIconContentDescription="email"
+        android:hint="@string/password"
+        style="@style/password_text_input_layout"
+        app:startIconContentDescription="@string/password"
         app:startIconDrawable="@drawable/password">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            style="@style/password_edit_text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
         android:id="@+id/swKeepLogged"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Keep me logged in" />
+        style="@style/switch_"
+        android:text="@string/keep_me_logged_in" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
+        style="@style/horizontal_layout">
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
+            style="@style/left_button"
             android:background="@drawable/buttons"
             android:drawableStart="@drawable/person_add"
-            android:onClick="RegisterProfile"
-            android:text="Register"
-            android:textColor="#FFFFFF" />
+            android:text="@string/register" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="30dp"
-            android:layout_weight="1"
+            style="@style/right_button"
             android:background="@drawable/buttons"
             android:drawableStart="@drawable/exit_to_app"
-            android:onClick="Login"
-            android:text="Login"
-            android:textColor="#FFFFFF" />
+            android:text="@string/login" />
+
     </LinearLayout>
 </LinearLayout>
