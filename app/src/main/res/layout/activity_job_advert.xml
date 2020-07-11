@@ -136,6 +136,7 @@
                 style="@style/button"
                 android:background="@drawable/buttons"
                 android:drawableStart="@drawable/save"
+                android:onClick="Save"
                 android:text="@string/save" />
         </LinearLayout>
 

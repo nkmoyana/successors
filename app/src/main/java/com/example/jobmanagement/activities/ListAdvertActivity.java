@@ -198,15 +198,20 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == INSERT_JOB_ADVERT && resultCode == RESULT_OK)
         {
-            //JobAdvert dataBack = data.getParcelableExtra("data");
 
-           // ApplicationClass.jobAdverts.add(dataBack);
+
+
 
             adapter.notifyDataSetChanged();
         }
-        else
+        if (requestCode == UPDATE_JOB_ADVERT && resultCode == RESULT_OK)
         {
-            adapter.notifyDataSetChanged();
+            JobAdvert dataBack = data.getParcelableExtra("data");
+            ApplicationClass.jobAdverts.add(0,dataBack);
+            layoutManager = new LinearLayoutManager(getApplicationContext());
+            recyclerView.setLayoutManager(layoutManager);
+            adapter = new DataAdapter((List<JobAdvert>)ApplicationClass.jobAdverts);
+            recyclerView.setAdapter(adapter);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

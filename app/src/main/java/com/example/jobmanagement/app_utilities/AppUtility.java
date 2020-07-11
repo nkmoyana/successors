@@ -49,7 +49,7 @@ public class AppUtility extends Application
             ivToast.setImageResource(R.drawable.error);
             tvMessage.setTextColor(Color.YELLOW);
             Toast toast = new Toast(context);
-            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM | Gravity.FILL_HORIZONTAL, 0, 0);
             toast.setView(toastView);
             toast.show();

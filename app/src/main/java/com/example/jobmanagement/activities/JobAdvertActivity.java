@@ -9,11 +9,14 @@ import com.example.jobmanagement.R;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobAdvert;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
@@ -185,7 +188,35 @@ public class JobAdvertActivity extends AppCompatActivity {
 
             @Override
             public void onException(Exception e) {
+                if (e.getMessage() == "Job Advert already exist")
+                {
+                    new UpdateJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
+                        @Override
+                        public void onSuccess(JobAdvert success) {
+                            //toast display
+                            Intent intent = new Intent();
+                            intent.putExtra("data", jobAdvert);
+                            setResult(RESULT_OK, intent);
+                            Toast.makeText(getApplicationContext(), success.getJobCompany() +
+                                    " successfully updated!", Toast.LENGTH_SHORT).show();
+                            JobAdvertActivity.this.finish();
 
+                        }
+
+                        @Override
+                        public void onException(Exception e) {
+                            View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                            AppUtility.ShowToast(JobAdvertActivity.this, e.getMessage(), toastView,2);
+                        }
+                    }).execute(jobAdvert);
+                }
+                else
+                {
+                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                    AppUtility.ShowToast(JobAdvertActivity.this, e.getMessage(), toastView,2);
+                }
             }
         }).execute(jobAdvert);
 //        String jTitle = edtJobTitle.getText().toString();
@@ -211,11 +242,7 @@ public class JobAdvertActivity extends AppCompatActivity {
 //                                     aType, jPosition, jCompany, jDescription,
 //                                            licenseFlag, jQualification);
 
-//        Intent intent = new Intent();
-//        intent.putExtra("data", jobAdvert);
-//        setResult(RESULT_OK, intent);
-//        //AppUtility.ShowToast(JobAdvertActivity.this, "Successfully added");
-//        JobAdvertActivity.this.finish();
+
 
     }
 }

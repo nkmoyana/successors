@@ -58,6 +58,7 @@
             android:id="@+id/btnRegister"
             style="@style/left_button"
             android:background="@drawable/buttons"
+            android:onClick="RegisterProfile"
             android:drawableStart="@drawable/person_add"
             android:text="@string/register" />
 
@@ -65,6 +66,7 @@
             android:id="@+id/btnLogin"
             style="@style/right_button"
             android:background="@drawable/buttons"
+            android:onClick="Login"
             android:drawableStart="@drawable/exit_to_app"
             android:text="@string/login" />
 

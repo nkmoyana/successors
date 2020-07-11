@@ -152,6 +152,7 @@
             style="@style/button"
             android:background="@drawable/buttons"
             android:drawableStart="@drawable/save"
+            android:onClick="Register"
             android:text="@string/register" />
     </LinearLayout>
 </ScrollView>
