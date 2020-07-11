@@ -6,19 +6,14 @@
     <string name="job_adverts">Job Adverts</string>
     <string name="email_address">Email address</string>
     <string name="email">Email</string>
-    <string name="password">Password</string>
     <string name="enter_password">Enter password</string>
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="apply_image">Apply image</string>
     <string name="keep_me_logged_in">Keep me logged in</string>
-    <string name="confirm_password">Confirm Password</string>
     <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
     <string name="cellphone_number">Cellphone Number</string>
-    <string name="identity_number">Identity Number</string>
     <string name="select_education_level">Select education level</string>
-    <string name="education_level">Education Level</string>
     <string name="field_of_study">Field Of Study</string>
     <string name="select_field_of_study">Select field of study</string>
     <string name="warning_type">Warning Type</string>
@@ -61,4 +56,12 @@
     <string name="favorite">favorite</string>
     <string name="insert_job_advert">Insert Job Advert</string>
     <string name="check">check</string>
+    <string name="enter_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="identity_number">Identity Number</string>
+    <string name="education_level">Education Level</string>
 </resources>

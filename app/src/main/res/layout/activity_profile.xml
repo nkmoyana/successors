@@ -125,7 +125,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text"
-                style="@style/auto_edit_text"
+                style="@style/dropdown_auto_edit_text"
                 android:hint="@string/select_education_level"
                 android:cursorVisible="false"/>
 
@@ -141,7 +141,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_text_field"
-                style="@style/auto_edit_text"
+                style="@style/dropdown_auto_edit_text"
                 android:hint="@string/select_field_of_study"
                 android:cursorVisible="false"/>
 

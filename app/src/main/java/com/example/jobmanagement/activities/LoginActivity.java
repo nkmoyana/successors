@@ -51,30 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         btnLogin =findViewById(R.id.btnLogin);
 
-        etEmail.setHint(R.string.empty_string);
-        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etEmail.setHint(R.string.enter_email_address);
-                } else {
-                    etEmail.setHint(R.string.empty_string);
-                }
-            }
-        });
+        AppUtility.setOnFocusChangeListener(etEmail,getString(R.string.email));
+        AppUtility.setOnFocusChangeListener(etPassword,getString(R.string.password));
 
-
-        etPassword.setHint(R.string.empty_string);
-        etPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    etPassword.setHint(R.string.please_enter_password);
-                } else {
-                    etPassword.setHint(R.string.empty_string);
-                }
-            }
-        });
 
 
         keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -82,17 +61,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    AppUtility.sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
-                    AppUtility.sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
-                }
-            }
-        });
-
-        keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
                     AppUtility.sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
                     AppUtility.sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
                 }

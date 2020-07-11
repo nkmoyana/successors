@@ -106,61 +106,11 @@ public class JobAdvertActivity extends AppCompatActivity {
 
         });
 
-        edtJobTitle.setHint(R.string.empty_string);
-        edtJobTitle.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtJobTitle.setHint(R.string.enter_job_title);
-                }
-                else
-                {
-                    edtJobTitle.setHint(R.string.empty_string);
-                }
-            }
-        });
+        AppUtility.setOnFocusChangeListener(edtJobTitle,"Job Title");
+        AppUtility.setOnFocusChangeListener(edtAdCompany,"Advertising Company");
+        AppUtility.setOnFocusChangeListener(edtJobDescription,"Job Description");
+        AppUtility.setOnFocusChangeListener(edtSalary,"Monthly Gross Salary");
 
-        edtAdCompany.setHint(R.string.empty_string);
-        edtAdCompany.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtAdCompany.setHint(R.string.enter_advertising_company);
-                }
-                else
-                {
-                    edtAdCompany.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtJobDescription.setHint(R.string.empty_string);
-        edtJobDescription.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtJobDescription.setHint(R.string.enter_job_description);
-                }
-                else
-                {
-                    edtJobDescription.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtSalary.setHint(R.string.empty_string);
-        edtSalary.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtSalary.setHint(R.string.enter_monthly_gross_salary);
-                }
-                else
-                {
-                    edtSalary.setHint(R.string.empty_string);
-                }
-            }
-        });
     }
     public void Save(View view) {
         jobAdvert.setJobTitle(edtJobTitle.getText().toString());

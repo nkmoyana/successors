@@ -129,7 +129,7 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
-    <style name="dropdown_auto_edit_text">
+    <style name="dropdown_auto_edit_text" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:cursorVisible">false</item>

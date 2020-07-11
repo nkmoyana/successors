@@ -94,131 +94,16 @@ public class ProfileActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.menu_dropdown);
         dropdownTextField.setAdapter(adapter);
 
-        edtEmail.setHint(R.string.empty_string);
-        edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtEmail.setHint(R.string.enter_email_address);
-                }
-                else
-                {
-                    edtEmail.setHint(R.string.empty_string);
-                }
-            }
-        });
+        AppUtility.setOnFocusChangeListener(edtEmail,getString(R.string.email));
+        AppUtility.setOnFocusChangeListener(edtPassword,getString(R.string.password));
+        AppUtility.setOnFocusChangeListener(edtConfirm,getString(R.string.confirm_password));
+        AppUtility.setOnFocusChangeListener(edtName,getString(R.string.name));
+        AppUtility.setOnFocusChangeListener(edtLastName,getString(R.string.last_name));
+        AppUtility.setOnFocusChangeListener(edtPhone,getString(R.string.phone_number));
+        AppUtility.setOnFocusChangeListener(edtID,getString(R.string.identity_number));
+        AppUtility.setDropdownText(dropdownText,getString(R.string.education_level));
+        AppUtility.setDropdownText(dropdownTextField,getString(R.string.field_of_study));
 
-        edtPassword.setHint(R.string.empty_string);
-        edtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtPassword.setHint(R.string.please_enter_password);
-                }
-                else
-                {
-                    edtPassword.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtConfirm.setHint(R.string.empty_string);
-        edtConfirm.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtConfirm.setHint(R.string.please_enter_password);
-                }
-                else
-                {
-                    edtConfirm.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtName.setHint(R.string.empty_string);
-        edtName.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtName.setHint(R.string.please_enter_name);
-                }
-                else
-                {
-                    edtName.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtLastName.setHint(R.string.empty_string);
-        edtLastName.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtLastName.setHint(R.string.please_enter_last_name);
-                }
-                else
-                {
-                    edtLastName.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtPhone.setHint(R.string.empty_string);
-        edtPhone.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtPhone.setHint(R.string.please_enter_phone_number);
-                }
-                else
-                {
-                    edtPhone.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        edtID.setHint(R.string.empty_string);
-        edtID.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    edtID.setHint(R.string.please_enter_identity_number);
-                }
-                else
-                {
-                    edtID.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        dropdownText.setHint(R.string.empty_string);
-        dropdownText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    dropdownText.setHint(R.string.select_education_level);
-                }
-                else
-                {
-                    dropdownText.setHint(R.string.empty_string);
-                }
-            }
-        });
-
-        dropdownTextField.setHint(R.string.empty_string);
-        dropdownTextField.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    dropdownTextField.setHint(R.string.select_field_of_study);
-                }
-                else
-                {
-                    dropdownTextField.setHint(R.string.empty_string);
-                }
-            }
-        });
 
 
         edtEmail.addTextChangedListener(new TextWatcher() {
@@ -235,8 +120,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String email = edtEmail.getText().toString();
-                validateEmail(email);
+//                String email = edtEmail.getText().toString();
+                AppUtility.validateInput(lytEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
             }
         });
 
@@ -254,8 +139,12 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String password = edtPassword.getText().toString();
-                validatePassword(password);
+
+                //String password = edtPassword.getText().toString();
+                //if(!edtPassword.isFocused())
+                //{
+                AppUtility.validateInput(lytPassword, PASSWORD_PATTERN,getString(R.string.password_too_simple) );
+                //}
             }
         });
 
@@ -293,8 +182,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String id = edtID.getText().toString();
-                validateID(id);
+                //String id = edtID.getText().toString();
+                AppUtility.validateNumInput(lytID, edtID, ID_PATTERN, getString(R.string.invalid_id));
             }
         });
 
@@ -312,10 +201,12 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String phone = edtPhone.getText().toString();
-                validatePhone(phone);
+                //String phone = edtPhone.getText().toString();
+                AppUtility.validateNumInput(lytPhone, edtPhone, PHONE_PATTERN, getString(R.string.incorrect_phone_format));
             }
         });
+
+
 
     }
 
@@ -367,36 +258,15 @@ public class ProfileActivity extends AppCompatActivity {
 
         }
 
-    }
-    private boolean validateEmail(String email) {
-        email = lytEmail.getEditText().getText().toString().trim();
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            lytEmail.setError(getString(R.string.incorrect_email_format));
-            return false;
-        }
-        else
-        {
-            lytEmail.setError(null);
-            lytEmail.setErrorEnabled(false);
-            lytEmail.setErrorIconDrawable(R.drawable.error_outline);
-            return true;
-        }
-    }
-    private boolean validatePassword(String password) {
-        password = lytPassword.getEditText().getText().toString().trim();
 
-        if(!PASSWORD_PATTERN.matcher(password).matches()) {
-            lytPassword.setError(getString(R.string.password_too_simple));
-            return false;
-        }
-        else
-        {
-            lytPassword.setError(null);
-            lytPassword.setErrorEnabled(false);
-            lytPassword.setErrorIconDrawable(R.drawable.error_outline);
-            return true;
-        }
+    }
+
+    public  void app(){
+        AppUtility.validateInput(lytEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
+        AppUtility.validateInput(lytPassword, PASSWORD_PATTERN,getString(R.string.password_too_simple) );
+        AppUtility.validateNumInput(lytPhone, edtPhone, PHONE_PATTERN, getString(R.string.incorrect_phone_format));
+        AppUtility.validateNumInput(lytID, edtID, ID_PATTERN, getString(R.string.invalid_id));
     }
 
     private boolean validateConfirmPassword(String confirmPassword, String password) {
@@ -416,35 +286,4 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validatePhone(String phone) {
-        phone = lytPhone.getEditText().getText().toString().trim();
-
-        if(!PHONE_PATTERN.matcher(phone).matches()) {
-            lytPhone.setError(phone + getString(R.string.incorrect_phone_format));
-            return false;
-        }
-        else
-        {
-            lytPhone.setError(null);
-            lytPhone.setErrorEnabled(false);
-            lytPhone.setErrorIconDrawable(R.drawable.error_outline);
-            return true;
-        }
-    }
-
-    private boolean validateID(String id) {
-        id = lytID.getEditText().getText().toString().trim();
-
-        if(!ID_PATTERN.matcher(id).matches()) {
-            lytID.setError(id + getString(R.string.invalid_id));
-            return false;
-        }
-        else
-        {
-            lytID.setError(null);
-            lytID.setErrorEnabled(false);
-            lytID.setErrorIconDrawable(R.drawable.error_outline);
-            return true;
-        }
-    }
 }
