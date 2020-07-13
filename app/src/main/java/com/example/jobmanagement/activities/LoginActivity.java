@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.view.ViewGroup;
 import android.content.Intent;
+import android.text.TextUtils;
 import com.example.jobmanagement.R;
 import android.widget.CompoundButton;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Switch keepLogged;
     Button btnRegister, btnLogin;
     JobProfileDao jobProfileDao;
-    String userEmail, userPassword;
+    //String userEmail, userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
 
-        AppUtility.sharedpreferences = getSharedPreferences("my Preference", MODE_PRIVATE);
+        AppUtility.sharedpreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);//PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -58,8 +59,19 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    AppUtility.sharedpreferences.edit().putString("email", etEmail.getText().toString()).apply();
-                    AppUtility.sharedpreferences.edit().putString("password", etPassword.getText().toString()).apply();
+                    String email = "";
+                    if(etEmail != null && !TextUtils.isEmpty(etEmail.getText()))
+                    {
+                        email = etEmail.getText().toString();
+                    }
+                    AppUtility.sharedpreferences.edit().putString(getString(R.string.email), email).apply();
+
+                    String password = "";
+                    if(etPassword != null && !TextUtils.isEmpty(etPassword.getText()))
+                    {
+                        password = etPassword.getText().toString();
+                    }
+                    AppUtility.sharedpreferences.edit().putString(getString(R.string.password), password).apply();
                 }
             }
         });
@@ -67,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
         //userEmail = AppUtility.sharedpreferences.getString("email", "");
         //userPassword = AppUtility.sharedpreferences.getString("password", "");
 
-        if(!(AppUtility.sharedpreferences.getString("email", "").isEmpty() && AppUtility.sharedpreferences.getString("password", "").isEmpty())){
+        if(!(AppUtility.sharedpreferences.getString(getString(R.string.email), getString(R.string.empty_string)).isEmpty() && AppUtility.sharedpreferences.getString("password", "").isEmpty())){
             startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
         }
     }
@@ -77,23 +89,55 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public  void Login(View view){
-        if(etPassword.getText().toString().isEmpty() || etEmail.getText().toString().isEmpty()) // AppUtility
+        String email = getString(R.string.empty_string);
+        if(etEmail != null && !TextUtils.isEmpty(etEmail.getText()))
+        {
+            email = etEmail.getText().toString();
+        }
+
+        String password = getString(R.string.empty_string);
+        if(etPassword != null && !TextUtils.isEmpty(etPassword.getText()))
+        {
+            password = etPassword.getText().toString();
+        }
+
+        if(password.isEmpty() || email.isEmpty()) // AppUtility
         {
             View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
             AppUtility.ShowToast(LoginActivity.this, getString(R.string.enter_all_fields), toastView,2);        }
         else
         {
-            String userEmail, password;
-            userEmail = etEmail.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
+            String userEmail = getString(R.string.empty_string);
+            if(etEmail != null && !TextUtils.isEmpty(etEmail.getText()))
+            {
+                userEmail = etEmail.getText().toString().trim();
+            }
+
+            String userPassword = getString(R.string.empty_string);
+            if(etPassword != null && !TextUtils.isEmpty(etPassword.getText()))
+            {
+                userPassword = etPassword.getText().toString().trim();
+            }
 
             new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
                 @Override
                 public void onSuccess(JobProfile success) {
+                    String userEmail = getString(R.string.empty_string);
+                    if(etEmail != null && !TextUtils.isEmpty(etEmail.getText()))
+                    {
+                        userEmail = etEmail.getText().toString().trim();
+                    }
+
+                    String userPassword = getString(R.string.empty_string);
+                    if(etPassword != null && !TextUtils.isEmpty(etPassword.getText()))
+                    {
+                        userPassword = etPassword.getText().toString().trim();
+                    }
+
                     Intent intent = new Intent(LoginActivity.this, ListAdvertActivity.class);
-                    intent.putExtra("userEmail", etEmail.getText().toString().trim());
-                    intent.putExtra("userPassword", etPassword.getText().toString().trim());
+                    intent.putExtra(getString(R.string.user_email), userEmail);
+                    intent.putExtra(getString(R.string.user_password), userPassword);
                     startActivity(intent);
                 }
 
@@ -107,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                     AppUtility.ShowToast(LoginActivity.this, e.getMessage(), toastView,2);
 
                 }
-            }).execute(userEmail, password); //two strings
+            }).execute(userEmail, userPassword); //two strings
         }
     }
 

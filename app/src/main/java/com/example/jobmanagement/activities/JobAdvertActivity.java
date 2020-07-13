@@ -1,28 +1,28 @@
 package com.example.jobmanagement.activities;
 
-import android.os.Bundle;
 import android.view.View;
+import android.os.Bundle;
+import android.widget.Toast;
 import android.widget.Button;
 import android.widget.Switch;
 import android.view.ViewGroup;
 import android.content.Intent;
+import android.text.TextUtils;
 import com.example.jobmanagement.R;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobAdvert;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
-import com.example.jobmanagement.db_repositories.job_advert.FindJobAdvertAsync;
-import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.db_repositories.job_advert.FindJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_advert.InsertJobAdvertAsync;
+import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
 
 
 
@@ -194,21 +194,44 @@ public class JobAdvertActivity extends AppCompatActivity {
 
         });
 
-        AppUtility.setOnFocusChangeListener(edtJobTitle,"Job Title");
-        AppUtility.setOnFocusChangeListener(edtAdCompany,"Advertising Company");
-        AppUtility.setOnFocusChangeListener(edtJobDescription,"Job Description");
-        AppUtility.setOnFocusChangeListener(edtSalary,"Monthly Gross Salary");
+        AppUtility.setOnFocusChangeListener(edtJobTitle,getString(R.string.job_title));
+        AppUtility.setOnFocusChangeListener(edtAdCompany,getString(R.string.advertising_company));
+        AppUtility.setOnFocusChangeListener(edtJobDescription,getString(R.string.job_description));
+        AppUtility.setOnFocusChangeListener(edtSalary,getString(R.string.monthly_gross_salary));
 
     }
     public void Save(View view) {
-        jobAdvert.setJobTitle(edtJobTitle.getText().toString());
+        String jobTitle = getString(R.string.empty_string), adCompany = getString(R.string.empty_string),
+                jobDescription = getString(R.string.empty_string), salary = getString(R.string.empty_string);
+        if(edtJobTitle != null && !TextUtils.isEmpty(edtJobTitle.getText()))
+        {
+            jobTitle = edtJobTitle.getText().toString();
+        }
+        jobAdvert.setJobTitle(jobTitle);
+
         jobAdvert.setAppointmentType(dropdownAppointType.getText().toString());
         jobAdvert.setJobPosition(dropdownPosition.getText().toString());
         jobAdvert.setJobLocation(dropdownLocation.getText().toString());
-        jobAdvert.setJobCompany(edtAdCompany.getText().toString());
-        jobAdvert.setJobDescription(edtJobDescription.getText().toString());
+
+        if(edtAdCompany != null && !TextUtils.isEmpty(edtAdCompany.getText()))
+        {
+            adCompany = edtAdCompany.getText().toString();
+        }
+        jobAdvert.setJobTitle(adCompany);
+
+        if(edtJobDescription != null && !TextUtils.isEmpty(edtJobDescription.getText()))
+        {
+            jobDescription = edtJobDescription.getText().toString();
+        }
+        jobAdvert.setJobTitle(jobDescription);
+
         jobAdvert.setJobQualification(dropdownQualification.getText().toString());
-        jobAdvert.setJobSalary(edtSalary.getText().toString());
+
+        if(edtSalary != null && !TextUtils.isEmpty(edtSalary.getText()))
+        {
+            salary = edtSalary.getText().toString();
+        }
+        jobAdvert.setJobTitle(salary);
         jobAdvert.setLicence(licenseFlag);
 
 
@@ -226,7 +249,8 @@ public class JobAdvertActivity extends AppCompatActivity {
 
             @Override
             public void onException(Exception e) {
-                if (e.getMessage() == "Job Advert already exist")
+                String error = e.getMessage();
+                if (error != null && error.equals(getString(R.string.job_advert_already_exist)))
                 {
                     new UpdateJobAdvertAsync(jobAdvertDao, new AsyncTaskCallback<JobAdvert>() {
                         @Override

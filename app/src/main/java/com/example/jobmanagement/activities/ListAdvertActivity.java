@@ -1,8 +1,6 @@
 package com.example.jobmanagement.activities;
 
 import java.util.List;
-
-import android.app.Application;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -99,14 +97,13 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
             case R.id.editProfile:
                 AppUtility.isEdit = true;
                 Intent intent = new Intent(ListAdvertActivity.this, ProfileActivity.class);
-                String email = AppUtility.sharedpreferences.getString("email", "");
-                intent.putExtra("userEmail", getIntent().getStringExtra("userEmail"));
-                intent.putExtra("userPassword", getIntent().getStringExtra("userPassword"));
-                startActivity(intent);
+                //String email = AppUtility.sharedpreferences.getString("email", "");
+                intent.putExtra(getString(R.string.user_email), getIntent().getStringExtra(getString(R.string.user_email)));
+                intent.putExtra(getString(R.string.user_password), getIntent().getStringExtra(getString(R.string.user_password)));                startActivity(intent);
                 break;
             case R.id.logout:
-                AppUtility.sharedpreferences.edit().putString("email", "").apply();
-                AppUtility.sharedpreferences.edit().putString("password", "").apply();
+                AppUtility.sharedpreferences.edit().putString(getString(R.string.email), getString(R.string.empty_string)).apply();
+                AppUtility.sharedpreferences.edit().putString(getString(R.string.password), getString(R.string.empty_string)).apply();
                 startActivity(new Intent(ListAdvertActivity.this, LoginActivity.class));
                 ListAdvertActivity.this.finish();
                 break;
@@ -114,7 +111,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
                 break;
             case R.id.add:
                 Intent addIntent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
-                addIntent.putExtra("requestCode", INSERT_JOB_ADVERT);
+                addIntent.putExtra(getString(R.string.request_code), INSERT_JOB_ADVERT);
                 startActivityForResult(addIntent, INSERT_JOB_ADVERT);
                 break;
         }
@@ -125,15 +122,15 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
     public void onEditAdvertClick(JobAdvert jobAdvert) {
         AppUtility.isEdit =true;
         Intent intent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
-        intent.putExtra("requestCode", UPDATE_JOB_ADVERT);
-        intent.putExtra("JobAvertId", jobAdvert.getId());
+        intent.putExtra(getString(R.string.request_code), UPDATE_JOB_ADVERT);
+        intent.putExtra(getString(R.string.job_advert_id), jobAdvert.getId());
         startActivityForResult(intent, UPDATE_JOB_ADVERT);
     }
 
     @Override
     public void onViewAdvertClick(int i) {
         Intent intent = new Intent(ListAdvertActivity.this, JobDetailActivity.class);
-        intent.putExtra("index", i);
+        intent.putExtra(getString(R.string.index), i);
         startActivity(intent);
     }
 
@@ -145,7 +142,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
                 View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                AppUtility.ShowToast(ListAdvertActivity.this, " successfully deleted!", toastView,3);
+                AppUtility.ShowToast(ListAdvertActivity.this, getString(R.string.successfully_deleted), toastView,3);
 
 //                Toast.makeText(ListAdvertActivity.this,
 //                        success.getJobTitle() + " successfully deleted!",
@@ -160,7 +157,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
                 View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+                AppUtility.ShowToast(ListAdvertActivity.this, getString(R.string.error), toastView,2);
 
 //                Toast.makeText(ListAdvertActivity.this, "Error : " +
 //                        e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -178,7 +175,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
                 View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                AppUtility.ShowToast(ListAdvertActivity.this, "Job Advert successfully applied to", toastView,1);
+                AppUtility.ShowToast(ListAdvertActivity.this, getString(R.string.job_advert_applied_to), toastView,1);
 
 //                Toast.makeText(ListAdvertActivity.this, "Job Advert successfully applied to",
 //                        Toast.LENGTH_SHORT).show();
@@ -191,7 +188,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
                 View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+                AppUtility.ShowToast(ListAdvertActivity.this, getString(R.string.error), toastView,2);
 
 //                Toast.makeText(ListAdvertActivity.this, "Error : " +
 //                        e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -208,11 +205,11 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         }
         if (requestCode == UPDATE_JOB_ADVERT && resultCode == RESULT_OK)
         {
-            JobAdvert dataBack = data.getParcelableExtra("data");
+            JobAdvert dataBack = data.getParcelableExtra(getString(R.string.data));
             ApplicationClass.jobAdverts.add(0,dataBack);
             layoutManager = new LinearLayoutManager(getApplicationContext());
             recyclerView.setLayoutManager(layoutManager);
-            adapter = new DataAdapter((List<JobAdvert>)ApplicationClass.jobAdverts);
+            adapter = new DataAdapter(ApplicationClass.jobAdverts);
             recyclerView.setAdapter(adapter);
         }
         super.onActivityResult(requestCode, resultCode, data);

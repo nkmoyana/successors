@@ -56,6 +56,23 @@
     <string name="favorite">favorite</string>
     <string name="insert_job_advert">Insert Job Advert</string>
     <string name="check">check</string>
+    <string name="job_title">Job Title</string>
+    <string name="advertising_company">Advertising Company</string>
+    <string name="job_description">Job Description</string>
+    <string name="monthly_gross_salary">Monthly Gross Salary</string>
+    <string name="successfully_added">\" successfully added!\"</string>
+    <string name="job_advert_already_exist">Job Advert already exist</string>
+    <string name="data">data</string>
+    <string name="my_preference">my Preference</string>
+    <string name="user_email">userEmail</string>
+    <string name="user_password">userPassword</string>
+    <string name="hi">\"Hi \"</string>
+    <string name="profile_created">, Your profile has been created</string>
+    <string name="error">\"Error: \"</string>
+    <string name="request_code">requestCode</string>
+    <string name="index">index</string>
+    <string name="successfully_deleted">\" successfully deleted!\"</string>
+    <string name="job_advert_applied_to">Job Advert successfully applied to</string>
     <string name="enter_address">Email Address</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -67,4 +84,5 @@
     <string name="update_profile">Update Profile</string>
     <string name="update_JobAvert_ActionBar">Update Job Advert</string>
     <string name="update_Title">Update</string>
+    <string name="job_advert_id">JobAdvertId</string>
 </resources>

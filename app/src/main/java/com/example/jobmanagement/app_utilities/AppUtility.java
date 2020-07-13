@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -86,7 +87,7 @@ public class AppUtility extends Application
                     textInputEditText.setHint(R.string.empty_string);
                 }
             }
-        });;
+        });
     }
     public static void setDropdownText(final AutoCompleteTextView autoCompleteTextView, final String text)
     {
@@ -105,10 +106,13 @@ public class AppUtility extends Application
         });
 
     }
-    public static void validateInput(final TextInputLayout textInputLayout, Pattern pattern, String text)
+    public static void validateInput(final TextInputLayout textInputLayout, TextInputEditText textInputEditText, Pattern pattern, String text)
     {
-        String validates;
-        validates = textInputLayout.getEditText().getText().toString().trim();
+        String validates = "";
+        if(textInputEditText != null && !TextUtils.isEmpty(textInputEditText.getText()))
+        {
+            validates = textInputEditText.getText().toString().trim();
+        }
 
         if(!pattern.matcher(validates).matches()) {
             textInputLayout.setError(text);
@@ -124,9 +128,17 @@ public class AppUtility extends Application
 
     public static void validateNumInput(final TextInputLayout textInputLayout, TextInputEditText textInputEditText, Pattern pattern, String text)
     {
-        String validates, number;
-        number = textInputEditText.getText().toString().trim();
-        validates = textInputLayout.getEditText().getText().toString().trim();
+        String validates = "", number = "";
+        if(textInputEditText != null && !TextUtils.isEmpty(textInputEditText.getText()))
+        {
+            validates = textInputEditText.getText().toString().trim();
+        }
+
+        if(textInputEditText != null && !TextUtils.isEmpty(textInputEditText.getText()))
+        {
+            number = textInputEditText.getText().toString().trim();
+        }
+
 
         if(!pattern.matcher(validates).matches()) {
             textInputLayout.setError(number + text);

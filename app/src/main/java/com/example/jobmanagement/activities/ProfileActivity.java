@@ -1,29 +1,29 @@
 package com.example.jobmanagement.activities;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.View;
+import android.widget.Toast;
+import android.util.Patterns;
+import android.widget.Button;
+import android.text.Editable;
 import android.view.ViewGroup;
+import android.text.TextUtils;
 import java.util.regex.Pattern;
+import android.widget.TextView;
+import android.text.TextWatcher;
 import com.example.jobmanagement.R;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobProfile;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobProfileDao;
-import com.example.jobmanagement.db_repositories.job_profile.FindJobProfileAsync;
-import com.example.jobmanagement.db_repositories.job_profile.UpdateJobProfileAsync;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
+import com.example.jobmanagement.db_repositories.job_profile.FindJobProfileAsync;
+import com.example.jobmanagement.db_repositories.job_profile.UpdateJobProfileAsync;
 import com.example.jobmanagement.db_repositories.job_profile.InsertJobProfileAsync;
 
 
@@ -51,13 +51,13 @@ public class ProfileActivity extends AppCompatActivity {
     private static final Pattern ID_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +
             "(?=\\S+$)" +
-            ".{13,13}" +
+            ".{13}" +
             "$");
 
     private static final Pattern PHONE_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +
             "(?=\\S+$)" +
-            ".{10,10}" +
+            ".{10}" +
             "$");
 
     @Override
@@ -141,12 +141,50 @@ public class ProfileActivity extends AppCompatActivity {
                     new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
                         @Override
                         public void onSuccess(JobProfile success) {
-                            success.setEmail(edtEmail.getText().toString().trim());
-                            success.setPassword(edtPassword.getText().toString().trim());
-                            success.setName(edtName.getText().toString().trim());
-                            success.setSurname(edtLastName.getText().toString().trim());
-                            success.setCellphone(edtPhone.getText().toString().trim());
-                            success.setIdentityNumber(edtID.getText().toString().trim());
+
+                            String email = getString(R.string.empty_string);
+                            if(edtEmail != null && !TextUtils.isEmpty(edtEmail.getText()))
+                            {
+                                email = edtEmail.getText().toString().trim();
+                            }
+
+                            String password = getString(R.string.empty_string);
+                            if(edtPassword != null && !TextUtils.isEmpty(edtPassword.getText()))
+                            {
+                                password = edtPassword.getText().toString().trim();
+                            }
+
+                            String name = getString(R.string.empty_string);
+                            if(edtName != null && !TextUtils.isEmpty(edtName.getText()))
+                            {
+                                name = edtName.getText().toString().trim();
+                            }
+
+                            String lastName = getString(R.string.empty_string);
+                            if(edtLastName != null && !TextUtils.isEmpty(edtLastName.getText()))
+                            {
+                                lastName = edtLastName.getText().toString().trim();
+                            }
+
+                            String phone = getString(R.string.empty_string);
+                            if(edtPhone != null && !TextUtils.isEmpty(edtPhone.getText()))
+                            {
+                                phone = edtPhone.getText().toString().trim();
+                            }
+
+                            String id = getString(R.string.empty_string);
+
+                            if(edtID != null && !TextUtils.isEmpty(edtID.getText()))
+                            {
+                                id = edtID.getText().toString().trim();
+                            }
+
+                            success.setEmail(email);
+                            success.setPassword(password);
+                            success.setName(name);
+                            success.setSurname(lastName);
+                            success.setCellphone(phone);
+                            success.setIdentityNumber(id);
                             success.setEducation(dropdownText.getText().toString());
                             success.setQualification(dropdownTextField.getText().toString());
 
@@ -210,7 +248,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 //                String email = edtEmail.getText().toString();
-                AppUtility.validateInput(lytEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
+                AppUtility.validateInput(lytEmail, edtEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
             }
         });
 
@@ -232,7 +270,7 @@ public class ProfileActivity extends AppCompatActivity {
                 //String password = edtPassword.getText().toString();
                 //if(!edtPassword.isFocused())
                 //{
-                AppUtility.validateInput(lytPassword, PASSWORD_PATTERN,getString(R.string.password_too_simple) );
+                AppUtility.validateInput(lytPassword, edtPassword,  PASSWORD_PATTERN,getString(R.string.password_too_simple) );
                 //}
             }
         });
@@ -251,9 +289,21 @@ public class ProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String confirm = edtConfirm.getText().toString();
-                String password = edtPassword.getText().toString();
-                validateConfirmPassword(confirm,password);
+                String confirm = getString(R.string.empty_string);
+
+                if(edtConfirm != null && !TextUtils.isEmpty(edtConfirm.getText()))
+                {
+                    confirm = edtConfirm.getText().toString();
+                }
+
+                String password = getString(R.string.empty_string);
+
+                if(edtPassword != null && !TextUtils.isEmpty(edtPassword.getText()))
+                {
+                    password = edtPassword.getText().toString();
+                }
+
+                validateConfirmPassword(confirm, password);
             }
         });
 
@@ -306,12 +356,49 @@ public class ProfileActivity extends AppCompatActivity {
         boolean TextInputEditTextHasText = AppUtility.TextInputEditTextHasText(edtEmail, edtPassword, edtConfirm, edtName, edtLastName, edtPhone, edtID);
         boolean AutoCompleteTextViewHasText = AppUtility.AutoCompleteTextViewHasText(dropdownText, dropdownTextField);
         if(TextInputEditTextHasText && AutoCompleteTextViewHasText){
-            jobProfile.setEmail(edtEmail.getText().toString().trim());
-            jobProfile.setPassword(edtPassword.getText().toString().trim());
-            jobProfile.setName(edtName.getText().toString().trim());
-            jobProfile.setSurname(edtLastName.getText().toString().trim());
-            jobProfile.setCellphone(edtPhone.getText().toString().trim());
-            jobProfile.setIdentityNumber(edtID.getText().toString().trim());
+            String email = getString(R.string.empty_string);
+            if(edtEmail != null && !TextUtils.isEmpty(edtEmail.getText()))
+            {
+                email = edtEmail.getText().toString().trim();
+            }
+            jobProfile.setEmail(email);
+
+            String password = getString(R.string.empty_string);
+            if(edtPassword != null && !TextUtils.isEmpty(edtPassword.getText()))
+            {
+                password = edtPassword.getText().toString().trim();
+            }
+            jobProfile.setPassword(password);
+
+            String name = getString(R.string.empty_string);
+            if(edtName != null && !TextUtils.isEmpty(edtName.getText()))
+            {
+                name = edtName.getText().toString().trim();
+            }
+            jobProfile.setName(name);
+
+            String lastName = getString(R.string.empty_string);
+            if(edtLastName != null && !TextUtils.isEmpty(edtLastName.getText()))
+            {
+                lastName = edtLastName.getText().toString().trim();
+            }
+            jobProfile.setSurname(lastName);
+
+            String phone = getString(R.string.empty_string);
+            if(edtPhone != null && !TextUtils.isEmpty(edtPhone.getText()))
+            {
+                phone = edtPhone.getText().toString().trim();
+            }
+            jobProfile.setCellphone(phone);
+
+            String id = getString(R.string.empty_string);
+
+            if(edtID != null && !TextUtils.isEmpty(edtID.getText()))
+            {
+                id = edtID.getText().toString().trim();
+            }
+            jobProfile.setIdentityNumber(id);
+
             jobProfile.setEducation(dropdownText.getText().toString());
             jobProfile.setQualification(dropdownTextField.getText().toString());
 
@@ -322,7 +409,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                    AppUtility.ShowToast(ProfileActivity.this, "Hi " + success.getName() + " " + success.getSurname() + ", Your profile has been created", toastView, 1);
+                    AppUtility.ShowToast(ProfileActivity.this, getString(R.string.hi) + success.getName() + getString(R.string.empty_string) + success.getSurname() + getString(R.string.profile_created), toastView, 1);
 
                     ProfileActivity.this.finish();
                 }
@@ -343,7 +430,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-            AppUtility.ShowToast(ProfileActivity.this, "Please enter all fields", toastView,2);
+            AppUtility.ShowToast(ProfileActivity.this, getString(R.string.enter_all_fields), toastView,2);
 
         }
 
@@ -352,26 +439,33 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public  void app(){
-        AppUtility.validateInput(lytEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
-        AppUtility.validateInput(lytPassword, PASSWORD_PATTERN,getString(R.string.password_too_simple) );
+        AppUtility.validateInput(lytEmail, edtEmail, Patterns.EMAIL_ADDRESS, getString(R.string.incorrect_email_format));
+        AppUtility.validateInput(lytPassword, edtPassword, PASSWORD_PATTERN,getString(R.string.password_too_simple) );
         AppUtility.validateNumInput(lytPhone, edtPhone, PHONE_PATTERN, getString(R.string.incorrect_phone_format));
         AppUtility.validateNumInput(lytID, edtID, ID_PATTERN, getString(R.string.invalid_id));
     }
 
-    private boolean validateConfirmPassword(String confirmPassword, String password) {
-        confirmPassword = lytConfirm.getEditText().getText().toString().trim();
-        password = lytPassword.getEditText().getText().toString().trim();
+    private void validateConfirmPassword(String confirmPassword, String password) {
+        if(edtConfirm != null && !TextUtils.isEmpty(edtConfirm.getText()))
+        {
+            confirmPassword = edtConfirm.getText().toString().trim();
+        }
 
-        if(!confirmPassword.equals(password)) {
+        if(edtPassword != null && !TextUtils.isEmpty(edtPassword.getText()))
+        {
+            password = edtPassword.getText().toString().trim();
+        }
+
+
+        if(!confirmPassword.equals(password))
+        {
             lytConfirm.setError(getString(R.string.confirmation_unmatched));
-            return false;
         }
         else
         {
             lytConfirm.setError(null);
             lytConfirm.setErrorEnabled(false);
             lytConfirm.setErrorIconDrawable(R.drawable.error_outline);
-            return true;
         }
     }
 
