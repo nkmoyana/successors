@@ -2,6 +2,7 @@ package com.example.jobmanagement.activities;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.view.ViewGroup;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.example.jobmanagement.data_models.JobAdvert;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobAdvertDao;
+import com.example.jobmanagement.db_repositories.job_advert.FindJobAdvertAsync;
 import com.example.jobmanagement.db_repositories.job_advert.UpdateJobAdvertAsync;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,6 +43,8 @@ public class JobAdvertActivity extends AppCompatActivity {
 
     Boolean licenseFlag;
 
+    Button btnSaveRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,7 @@ public class JobAdvertActivity extends AppCompatActivity {
         jobAdvert = new JobAdvert();
         jobAdvertDao = Connections.getInstance(JobAdvertActivity.this).getDatabase().getJobAdvertDao();
 
+        btnSaveRegister = findViewById(R.id.btnSave);
         lytJobTitle = findViewById(R.id.lytJobTitle);
         lytAppointType = findViewById(R.id.lytAppointmentType);
         lytJobPosition = findViewById(R.id.lytJobPosition);
@@ -93,6 +98,89 @@ public class JobAdvertActivity extends AppCompatActivity {
         licenseFlag = false;
 
         //AppUtility.sharedpreferences = getSharedPreferences("licensePreference", MODE_PRIVATE);
+
+        if(AppUtility.isEdit){
+            if(getSupportActionBar() != null){
+                getSupportActionBar().setTitle(R.string.update_JobAvert_ActionBar);
+            }
+            btnSaveRegister.setText(R.string.update_Title);
+
+            new FindJobAdvertAsync(jobAdvertDao, jobAdvert, new AsyncTaskCallback<JobAdvert>() {
+                @Override
+                public void onSuccess(JobAdvert success) {
+
+                    //TESTING PURPOSE
+                    if(success == null){
+                        Toast.makeText(JobAdvertActivity.this, "success is null", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        edtJobTitle.setText(success.getJobTitle());
+                        dropdownAppointType.setText(success.getAppointmentType());
+                        dropdownPosition.setText(success.getJobPosition());
+                        dropdownLocation.setText(success.getJobLocation());
+                        edtAdCompany.setText(success.getJobCompany());
+                        edtJobDescription.setText(success.getJobDescription());
+                        dropdownQualification.setText(success.getJobQualification());
+                        edtSalary.setText(success.getJobSalary());
+                        swLicense.setChecked(true);
+                    }//end else
+                }
+
+                @Override
+                public void onException(Exception e) {
+                    Toast.makeText(JobAdvertActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).execute(getIntent().getLongExtra("JobAvertId", 0));
+
+//            btnSaveRegister.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    new FindJobAdvertAsync(jobAdvertDao, jobAdvert, new AsyncTaskCallback<JobAdvert>() {
+//                        @Override
+//                        public void onSuccess(JobAdvert success) {
+//                            success.setJobTitle(edtJobTitle.getText().toString().trim());
+//                            success.setAppointmentType(dropdownAppointType.getText().toString().trim());
+//                            success.setJobPosition(dropdownPosition.getText().toString().trim());
+//                            success.setJobLocation(dropdownLocation.getText().toString().trim());
+//                            success.setJobCompany(edtAdCompany.getText().toString().trim());
+//                            success.setJobDescription(edtJobDescription.getText().toString().trim());
+//                            success.setJobQualification(dropdownQualification.getText().toString());
+//                            success.setJobSalary(edtSalary.getText().toString());
+//                            success.setLicence(true);
+//
+//                            new UpdateJobProfileAsync(jobAdvertDao, new AsyncTaskCallback<JobProfile>() {
+//                                @Override
+//                                public void onSuccess(jobAdvertDao success) {
+//                                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+//
+//                                    AppUtility.ShowToast(JobAdvertActivity.this, "Hi " +
+//                                            success.getName() + " " + success.getSurname() +
+//                                            ", " + "your profile has been updated.", toastView,1);
+//                                    userEmail = success.getEmail();
+//                                    userPassword = success.getPassword();
+//                                    JobAdvertActivity.this.finish();
+//                                }
+//
+//                                @Override
+//                                public void onException(Exception e) {
+//                                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+//
+//                                    AppUtility.ShowToast(JobAdvertActivity.this, e.getMessage(), toastView,2);
+//                                }
+//                            }).execute(success);
+//                        }
+//
+//                        @Override
+//                        public void onException(Exception e) {
+//                            Toast.makeText(JobAdvertActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                        }
+//                    }).execute(userEmail, userPassword);
+//
+//                    AppUtility.isEdit = false;
+//                }
+//            });
+
+        } // end If
 
         swLicense.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

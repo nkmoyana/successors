@@ -10,11 +10,17 @@ import java.util.regex.Pattern;
 import com.example.jobmanagement.R;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.jobmanagement.data_models.JobProfile;
 import com.example.jobmanagement.app_utilities.AppUtility;
 import com.example.jobmanagement.db_operations.Connections;
 import com.example.jobmanagement.db_operations.JobProfileDao;
+import com.example.jobmanagement.db_repositories.job_profile.FindJobProfileAsync;
+import com.example.jobmanagement.db_repositories.job_profile.UpdateJobProfileAsync;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.example.jobmanagement.db_repositories.AsyncTaskCallback;
@@ -26,11 +32,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     TextInputLayout lytEmail, lytPassword, lytConfirm, lytName, lytLastName, lytPhone, lytID;
     TextInputEditText edtEmail, edtPassword, edtConfirm, edtName, edtLastName, edtPhone, edtID;
-
+    TextView tvTittle;
     TextInputLayout lytQualificationDropdown, lytFieldDropdown;
     AutoCompleteTextView dropdownText, dropdownTextField;
-
+    Button btnRegisterUpdate;
     JobProfileDao jobProfileDao;
+    String userEmail, userPassword;
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
             "(?=.*[0-9])" +
@@ -64,6 +71,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         jobProfileDao = Connections.getInstance(ProfileActivity.this).getDatabase().getJobProfileDao();
 
+        btnRegisterUpdate = findViewById(R.id.btnRegister);
+        tvTittle = findViewById(R.id.tvTittle);
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
         lytConfirm = findViewById(R.id.lytConfirmPassword);
@@ -93,6 +102,86 @@ public class ProfileActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(ProfileActivity.this, R.array.education_list, R.layout.menu_dropdown);
         adapter.setDropDownViewResource(R.layout.menu_dropdown);
         dropdownTextField.setAdapter(adapter);
+
+        if(AppUtility.isEdit){
+            userEmail = getIntent().getStringExtra("userEmail");
+            userPassword = getIntent().getStringExtra("userPassword");
+
+            if(getSupportActionBar() != null){
+                getSupportActionBar().setTitle(R.string.update_profile);
+            }
+            tvTittle.setText(R.string.update_profile);
+            btnRegisterUpdate.setText(R.string.update_Title);
+
+            new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
+                @Override
+                public void onSuccess(JobProfile success) {
+
+                    edtEmail.setText(success.getEmail());
+                    edtEmail.setEnabled(false);
+                    edtPassword.setText(success.getPassword());
+                    edtConfirm.setText(success.getPassword());
+                    edtName.setText(success.getName());
+                    edtLastName.setText(success.getSurname());
+                    edtPhone.setText(success.getCellphone());
+                    edtID.setText(success.getIdentityNumber());
+                    dropdownText.setText(success.getEducation());
+                    dropdownTextField.setText(success.getQualification());
+                }
+
+                @Override
+                public void onException(Exception e) {
+                    Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).execute(userEmail, userPassword);
+
+            btnRegisterUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
+                        @Override
+                        public void onSuccess(JobProfile success) {
+                            success.setEmail(edtEmail.getText().toString().trim());
+                            success.setPassword(edtPassword.getText().toString().trim());
+                            success.setName(edtName.getText().toString().trim());
+                            success.setSurname(edtLastName.getText().toString().trim());
+                            success.setCellphone(edtPhone.getText().toString().trim());
+                            success.setIdentityNumber(edtID.getText().toString().trim());
+                            success.setEducation(dropdownText.getText().toString());
+                            success.setQualification(dropdownTextField.getText().toString());
+
+                            new UpdateJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
+                                @Override
+                                public void onSuccess(JobProfile success) {
+                                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                                    AppUtility.ShowToast(ProfileActivity.this, "Hi " +
+                                            success.getName() + " " + success.getSurname() +
+                                            ", " + "your profile has been updated.", toastView,1);
+                                    userEmail = success.getEmail();
+                                    userPassword = success.getPassword();
+                                    ProfileActivity.this.finish();
+                                }
+
+                                @Override
+                                public void onException(Exception e) {
+                                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+
+                                    AppUtility.ShowToast(ProfileActivity.this, e.getMessage(), toastView,2);
+                                }
+                            }).execute(success);
+                        }
+
+                        @Override
+                        public void onException(Exception e) {
+                            Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }).execute(userEmail, userPassword);
+
+                    AppUtility.isEdit = false;
+                }
+            });
+        }
 
         AppUtility.setOnFocusChangeListener(edtEmail,getString(R.string.email));
         AppUtility.setOnFocusChangeListener(edtPassword,getString(R.string.password));

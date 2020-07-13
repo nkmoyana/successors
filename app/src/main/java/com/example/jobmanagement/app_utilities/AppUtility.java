@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 public class AppUtility extends Application
 {
     public  static  SharedPreferences sharedpreferences;
-
+    public  static Boolean isEdit = false;
 
     @Override
     public void onCreate() {

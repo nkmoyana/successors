@@ -1,6 +1,8 @@
 package com.example.jobmanagement.activities;
 
 import java.util.List;
+
+import android.app.Application;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -55,33 +57,33 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         recyclerView = findViewById(R.id.list);
 
 
-            new GetAllJobAdvertsAsync(jobAdvertDao ,new AsyncTaskCallback<List<JobAdvert>>() {
-                @Override
-                public void onSuccess(List<JobAdvert> success) {
+        new GetAllJobAdvertsAsync(jobAdvertDao ,new AsyncTaskCallback<List<JobAdvert>>() {
+            @Override
+            public void onSuccess(List<JobAdvert> success) {
 //
-                    if (success.size() != 0)
-                    {
-                        ApplicationClass.jobAdverts = (ArrayList)success;
-                        layoutManager = new LinearLayoutManager(getApplicationContext());
-                        recyclerView.setLayoutManager(layoutManager);
-                        adapter = new DataAdapter(success);
-                        recyclerView.setAdapter(adapter);
-                    }
+                if (success.size() != 0)
+                {
+                    ApplicationClass.jobAdverts = (ArrayList)success;
+                    layoutManager = new LinearLayoutManager(getApplicationContext());
+                    recyclerView.setLayoutManager(layoutManager);
+                    adapter = new DataAdapter(success);
+                    recyclerView.setAdapter(adapter);
                 }
+            }
 
-                @Override
-                public void onException(Exception e) {
-                        //Toast Display
+            @Override
+            public void onException(Exception e) {
+                //Toast Display
 
-                    View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
+                View toastView = getLayoutInflater().inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toastLinLay));
 
-                    AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
+                AppUtility.ShowToast(ListAdvertActivity.this, "Error: ", toastView,2);
 
 //                    Toast.makeText(ListAdvertActivity.this, "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).execute();
+            }
+        }).execute();
 
-        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,10 +97,11 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
         switch (item.getItemId())
         {
             case R.id.editProfile:
-
+                AppUtility.isEdit = true;
                 Intent intent = new Intent(ListAdvertActivity.this, ProfileActivity.class);
                 String email = AppUtility.sharedpreferences.getString("email", "");
-                intent.putExtra("email", email);
+                intent.putExtra("userEmail", getIntent().getStringExtra("userEmail"));
+                intent.putExtra("userPassword", getIntent().getStringExtra("userPassword"));
                 startActivity(intent);
                 break;
             case R.id.logout:
@@ -108,6 +111,7 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
                 ListAdvertActivity.this.finish();
                 break;
             case R.id.favorite:
+                break;
             case R.id.add:
                 Intent addIntent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
                 addIntent.putExtra("requestCode", INSERT_JOB_ADVERT);
@@ -119,8 +123,10 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
 
     @Override
     public void onEditAdvertClick(JobAdvert jobAdvert) {
+        AppUtility.isEdit =true;
         Intent intent = new Intent(ListAdvertActivity.this, JobAdvertActivity.class);
         intent.putExtra("requestCode", UPDATE_JOB_ADVERT);
+        intent.putExtra("JobAvertId", jobAdvert.getId());
         startActivityForResult(intent, UPDATE_JOB_ADVERT);
     }
 
@@ -198,10 +204,6 @@ public class ListAdvertActivity extends AppCompatActivity implements CardViewBut
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == INSERT_JOB_ADVERT && resultCode == RESULT_OK)
         {
-
-
-
-
             adapter.notifyDataSetChanged();
         }
         if (requestCode == UPDATE_JOB_ADVERT && resultCode == RESULT_OK)

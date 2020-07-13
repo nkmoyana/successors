@@ -11,7 +11,7 @@
         style="@style/basic_layout">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTittle"
             style="@style/header"
             android:text="@string/register_profile" />
         <com.google.android.material.textfield.TextInputLayout

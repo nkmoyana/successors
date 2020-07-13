@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".activities.JobAdvertActivity">
 
-    <LinearLayout
-        style="@style/basic_layout">
+    <LinearLayout style="@style/basic_layout">
 
         <TextView
             android:id="@+id/textView"
@@ -16,76 +15,76 @@
             android:text="@string/job_advert" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/text_input_layout"
             android:id="@+id/lytJobTitle"
+            style="@style/text_input_layout"
             android:hint="@string/enter_job_title"
             app:startIconContentDescription="@string/info"
             app:startIconDrawable="@drawable/info">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtJobTitle"
-                style="@style/job_edit_text"/>
+                style="@style/job_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/dropdown_input_layout"
             android:id="@+id/lytAppointmentType"
-            app:startIconDrawable="@drawable/info"
-            android:hint="@string/empty_string">
+            style="@style/dropdown_input_layout"
+            android:hint="@string/empty_string"
+            app:startIconDrawable="@drawable/info">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_appoint_type"
-                android:labelFor="@id/dropdown_appoint_type"
                 style="@style/dropdown_auto_edit_text"
+                android:labelFor="@id/dropdown_appoint_type"
                 android:text="@string/appointment_type" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/dropdown_input_layout"
             android:id="@+id/lytJobPosition"
-            app:startIconDrawable="@drawable/info"
-            android:hint="@string/empty_string">
+            style="@style/dropdown_input_layout"
+            android:hint="@string/empty_string"
+            app:startIconDrawable="@drawable/info">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_job_position"
-                android:labelFor="@id/dropdown_job_position"
                 style="@style/dropdown_auto_edit_text"
+                android:labelFor="@id/dropdown_job_position"
                 android:text="@string/job_position" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/dropdown_input_layout"
             android:id="@+id/lytJobLocation"
-            app:startIconDrawable="@drawable/info"
-            android:hint="@string/empty_string" >
+            style="@style/dropdown_input_layout"
+            android:hint="@string/empty_string"
+            app:startIconDrawable="@drawable/info">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_job_location"
-                android:labelFor="@id/dropdown_job_location"
                 style="@style/dropdown_auto_edit_text"
+                android:labelFor="@id/dropdown_job_location"
                 android:text="@string/job_location" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/text_input_layout"
             android:id="@+id/lytAdCompany"
+            style="@style/text_input_layout"
             android:hint="@string/enter_advertising_company"
             app:startIconContentDescription="@string/company"
             app:startIconDrawable="@drawable/company">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtAdCompany"
-                style="@style/company_edit_text"/>
+                style="@style/company_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/text_input_layout"
             android:id="@+id/lytJobDescription"
+            style="@style/text_input_layout"
             android:hint="@string/enter_job_description"
             app:startIconContentDescription="@string/info"
             app:startIconDrawable="@drawable/info">
@@ -97,38 +96,39 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/dropdown_input_layout"
             android:id="@+id/lytMinQualification"
-            app:startIconDrawable="@drawable/qualification"
-            android:hint="@string/empty_string">
+            style="@style/dropdown_input_layout"
+            android:hint="@string/empty_string"
+            app:startIconDrawable="@drawable/qualification">
 
             <AutoCompleteTextView
                 android:id="@+id/dropdown_min_qualification"
-                android:labelFor="@id/dropdown_min_qualification"
                 style="@style/dropdown_auto_edit_text"
+                android:labelFor="@id/dropdown_min_qualification"
                 android:text="@string/minimum_qualification" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/text_input_layout"
             android:id="@+id/lytSalary"
+            style="@style/text_input_layout"
             android:hint="@string/enter_monthly_gross_salary"
             app:startIconContentDescription="@string/money"
             app:startIconDrawable="@drawable/money">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtSalary"
-                style="@style/money_edit_text"/>
+                style="@style/money_edit_text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            style="@style/list_act_horizontal_layout3">
+        <LinearLayout style="@style/list_act_horizontal_layout3">
 
             <Switch
                 android:id="@+id/swLicense"
                 style="@style/switch_2"
+                android:layout_width="wrap_content"
+                android:layout_weight="0"
                 android:text="@string/license_required" />
 
             <Button

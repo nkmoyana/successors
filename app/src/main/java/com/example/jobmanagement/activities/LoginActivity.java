@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     Button btnRegister, btnLogin;
     JobProfileDao jobProfileDao;
     String userEmail, userPassword;
-    //SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         jobProfileDao = Connections.getInstance(LoginActivity.this).getDatabase().getJobProfileDao();
 
-        AppUtility.sharedpreferences = getSharedPreferences("my Preference", MODE_PRIVATE);//PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        AppUtility.sharedpreferences = getSharedPreferences("my Preference", MODE_PRIVATE);
 
         lytEmail = findViewById(R.id.lytEmail);
         lytPassword = findViewById(R.id.lytPassword);
@@ -54,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         AppUtility.setOnFocusChangeListener(etEmail,getString(R.string.email));
         AppUtility.setOnFocusChangeListener(etPassword,getString(R.string.password));
 
-
-
         keepLogged.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
             @Override
@@ -67,12 +64,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        userEmail = AppUtility.sharedpreferences.getString("email", "");
-        userPassword = AppUtility.sharedpreferences.getString("password", "");
+        //userEmail = AppUtility.sharedpreferences.getString("email", "");
+        //userPassword = AppUtility.sharedpreferences.getString("password", "");
 
-         if(!(userEmail.isEmpty() && userPassword.isEmpty())){
-             startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
-         }
+        if(!(AppUtility.sharedpreferences.getString("email", "").isEmpty() && AppUtility.sharedpreferences.getString("password", "").isEmpty())){
+            startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
+        }
     }
 
     public  void RegisterProfile(View view){
@@ -94,8 +91,10 @@ public class LoginActivity extends AppCompatActivity {
             new FindJobProfileAsync(jobProfileDao, new AsyncTaskCallback<JobProfile>() {
                 @Override
                 public void onSuccess(JobProfile success) {
-
-                    startActivity(new Intent(LoginActivity.this, ListAdvertActivity.class));
+                    Intent intent = new Intent(LoginActivity.this, ListAdvertActivity.class);
+                    intent.putExtra("userEmail", etEmail.getText().toString().trim());
+                    intent.putExtra("userPassword", etPassword.getText().toString().trim());
+                    startActivity(intent);
                 }
 
                 @Override

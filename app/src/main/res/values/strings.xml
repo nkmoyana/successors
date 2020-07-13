@@ -64,4 +64,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="identity_number">Identity Number</string>
     <string name="education_level">Education Level</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="update_JobAvert_ActionBar">Update Job Advert</string>
+    <string name="update_Title">Update</string>
 </resources>
